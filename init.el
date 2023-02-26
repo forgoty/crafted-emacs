@@ -33,6 +33,7 @@
 (require 'crafted-ide-packages)
 (require 'crafted-org-packages)
 (require 'crafted-ui-packages)
+(require 'crafted-ide-packages)
 (require 'crafted-custom-themes-packages)
 (require 'crafted-custom-input-packages)
 
@@ -54,6 +55,7 @@
 (require 'crafted-ui-config)
 (require 'crafted-workspaces-config)
 (require 'crafted-editing-config)
+(require 'crafted-ide-config)
 (require 'crafted-custom-themes-config)
 (require 'crafted-custom-input-config)
 (unless crafted-startup-inhibit-splash

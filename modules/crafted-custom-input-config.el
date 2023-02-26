@@ -16,10 +16,21 @@
 ;; SPC map
 (defvar my-leader-key "SPC" "The leader prefix key for Evil users.")
 
+;; Which key
 (which-key-mode t)
 (setq which-key-idle-delay 0.2)
 
+;; Evil-surround
+(global-evil-surround-mode 1)
+;; Spacemacs-like keybindings:
+;; https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org#the-vim-surround-case
+(evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-region)
+(evil-define-key 'visual evil-surround-mode-map "S" 'evil-substitute)
 
+;; Evil-visualstar
+(global-evil-visualstar-mode)
+
+;; general package config
 (general-evil-setup t)
 (general-create-definer my-leader-def
   :keymaps '(normal visual emacs)
@@ -27,6 +38,7 @@
 
 (my-leader-def
   "TAB" '(evil-switch-to-windows-last-buffer :which-key "switch to previous window")
+  "SPC" '(execute-extended-command :which-key "M-x")
   "/" '(rg-custom-search :which-key "regexp search in project")
   "1" '(winum-select-window-1 :which-key "select window 1")
   "2" '(winum-select-window-2 :which-key "select window 2")
@@ -65,8 +77,9 @@
   "bs" '(save-buffer :which-key "save file")
   "bD" '(custom/kill-other-buffers :which-key "kill other buffers")
   "bb" '(list-buffers :which-key "list buffers")
+  "bn" '(evil-next-buffer :which-key "next buffer")
+  "bp" '(evil-prev-buffer :which-key "previous buffer")
   "bd" '(kill-current-buffer t :which-key "delete buffer"))
-
 
 (provide 'crafted-custom-input-config)
 ;;; crafted-custom-input-config.el ends here
