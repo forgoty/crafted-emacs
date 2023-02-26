@@ -7,16 +7,15 @@
 
 ;;; Commentary:
 
-;; User interface customizations. Examples are the modeline and how
-;; help buffers are displayed.
+;; User interface customizations. Examples are icons, line numbers,
+;; and how help buffers are displayed.
 
 ;; This package provides a basic, customized appearance for
 ;; Emacs. Specifically, it uses: Helpful to customize the information
 ;; and visual display of help buffers, such as that created by M-x
-;; `describe-function'; Doom Modeline and Themes, to customize the
-;; appearance of buffers, text, et cetera; All-the-icons, to provide
-;; Doom Modeline with font-based icons (rather than raster or vector
-;; images); and includes some Emacs Lisp demonstrations.
+;; `describe-function'; All-the-icons, to provide font-based icons
+;; (rather than raster or vector images); and includes some Emacs Lisp
+;; demonstrations.
 
 ;;  Run `all-the-icons-install-fonts' to ensure the fonts necessary
 ;; for ALL THE ICONS are available on your system. You must run this
@@ -34,18 +33,18 @@
 ;;;; Help Buffers
 
 ;; Make `describe-*' screens more helpful
-(with-eval-after-load 'helpful
+(when (featurep 'helpful)
   (require 'helpful)
-  (define-key helpful-mode-map [remap revert-buffer] #'helpful-update)
-  (global-set-key [remap describe-command]           #'helpful-command)
-  (global-set-key [remap describe-function]          #'helpful-callable)
-  (global-set-key [remap describe-key]               #'helpful-key)
-  (global-set-key [remap describe-symbol]            #'helpful-symbol)
-  (global-set-key [remap describe-variable]          #'helpful-variable)
-  (global-set-key (kbd "C-h F")                      #'helpful-function))
+  (keymap-set helpful-mode-map "<remap> <revert-buffer>" #'helpful-update)
+  (keymap-global-set "<remap> <describe-command>"        #'helpful-command)
+  (keymap-global-set "<remap> <describe-function>"       #'helpful-callable)
+  (keymap-global-set "<remap> <describe-key>"            #'helpful-key)
+  (keymap-global-set "<remap> <describe-symbol>"         #'helpful-symbol)
+  (keymap-global-set "<remap> <describe-variable>"       #'helpful-variable)
+  (keymap-global-set "C-h F"                             #'helpful-function))
 
 ;; Bind extra `describe-*' commands
-(global-set-key (kbd "C-h K") #'describe-keymap)
+(keymap-global-set "C-h K" #'describe-keymap)
 
 ;;;; Line Numbers
 (defcustom crafted-ui-line-numbers-enabled-modes
@@ -57,6 +56,7 @@
 (defcustom crafted-ui-line-numbers-disabled-modes
   '(org-mode)
   "Modes which should not display line numbers.
+
 Modes derived from the modes defined in
 `crafted-ui-line-number-enabled-modes', but should not display line numbers."
   :type 'list

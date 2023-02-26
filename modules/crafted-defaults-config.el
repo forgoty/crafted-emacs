@@ -24,16 +24,6 @@
 ;; Use spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
-;; Use "y" and "n" to confirm/negate prompt instead of "yes" and "no"
-;; Using `advice' here to make it easy to reverse in custom
-;; configurations with `(advice-remove 'yes-or-no-p #'y-or-n-p)'
-;;
-;; N.B. Emacs 28 has a variable for using short answers, which should
-;; be preferred if using that version or higher.
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  (advice-add 'yes-or-no-p :override #'y-or-n-p))
-
 ;; Turn on recentf mode
 (add-hook 'after-init-hook #'recentf-mode)
 
@@ -81,14 +71,14 @@ also enables undo functionality if the window layout changes."
 
 (define-prefix-command 'crafted-windows-key-map)
 
-(define-key 'crafted-windows-key-map (kbd "u") 'winner-undo)
-(define-key 'crafted-windows-key-map (kbd "r") 'winner-redo)
-(define-key 'crafted-windows-key-map (kbd "n") 'windmove-down)
-(define-key 'crafted-windows-key-map (kbd "p") 'windmove-up)
-(define-key 'crafted-windows-key-map (kbd "b") 'windmove-left)
-(define-key 'crafted-windows-key-map (kbd "f") 'windmove-right)
+(keymap-set 'crafted-windows-key-map "u" 'winner-undo)
+(keymap-set 'crafted-windows-key-map "r" 'winner-redo)
+(keymap-set 'crafted-windows-key-map "n" 'windmove-down)
+(keymap-set 'crafted-windows-key-map "p" 'windmove-up)
+(keymap-set 'crafted-windows-key-map "b" 'windmove-left)
+(keymap-set 'crafted-windows-key-map "f" 'windmove-right)
 
-(global-set-key (kbd crafted-windows-prefix-key) 'crafted-windows-key-map)
+(keymap-global-set crafted-windows-prefix-key 'crafted-windows-key-map)
 
 
 ;;; Mastering Emacs inspired configuration defaults
@@ -136,7 +126,7 @@ less than 28."
                (window-width . 70)))
 
 ;; define a key to define the word at point.
-(define-key global-map (kbd "M-#") #'dictionary-lookup-definition)
+(keymap-set global-map "M-#" #'dictionary-lookup-definition)
 
 ;; pop up dedicated buffers in a different window.
 (customize-set-variable 'switch-to-buffer-in-dedicated-window 'pop)
@@ -159,7 +149,7 @@ less than 28."
 (customize-set-variable 'ibuffer-old-time 24)
 ;; prefer the more full-featured built-in ibuffer for managing
 ;; buffers.
-(global-set-key [remap list-buffers] #'ibuffer-list-buffers)
+(keymap-global-set "<remap> <list-buffers>" #'ibuffer-list-buffers)
 
 
 ;; turn on spell checking, if available.
@@ -183,7 +173,7 @@ less than 28."
     ("l" dumb-jump-quick-look "Quick look")
     ("b" dumb-jump-back "Back"))
   ;; not a great key as a mnemonic, but easy to press quickly
-  (define-key dumb-jump-mode-map (kbd "C-M-y") #'dumb-jump-hydra/body))
+  (keymap-set dumb-jump-mode-map "C-M-y" #'dumb-jump-hydra/body))
 
 ;; use xref
 (with-eval-after-load 'dumb-jump
