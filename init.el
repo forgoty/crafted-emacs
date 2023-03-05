@@ -30,12 +30,15 @@
 					; `package-selected-packages'
 					; list
 (require 'crafted-evil-packages)
-(require 'crafted-ide-packages)
 (require 'crafted-org-packages)
 (require 'crafted-ui-packages)
 (require 'crafted-ide-packages)
 (require 'crafted-custom-themes-packages)
 (require 'crafted-custom-input-packages)
+(require 'crafted-custom-tools-packages)
+
+;; IDE features
+(require 'crafted-golang-packages)
 
 ;; Install the packages listed in the `package-selected-packages' list.
 (package-install-selected-packages :noconfirm)
@@ -48,16 +51,18 @@
 (require 'crafted-defaults-config)
 (require 'crafted-startup-config)
 (require 'crafted-evil-config)
-(require 'crafted-editing-config)
-(require 'crafted-ide-config)
 (require 'crafted-org-config)
-(require 'crafted-speedbar-config)
 (require 'crafted-ui-config)
-(require 'crafted-workspaces-config)
-(require 'crafted-editing-config)
 (require 'crafted-ide-config)
+(require 'crafted-workspaces-config)
+(require 'crafted-custom-completion-config)
 (require 'crafted-custom-themes-config)
+(require 'crafted-custom-tools-config)
 (require 'crafted-custom-input-config)
+
+;; IDE features
+(require 'crafted-golang-config)
+
 (unless crafted-startup-inhibit-splash
   (setq initial-buffer-choice #'crafted-startup-screen))
 

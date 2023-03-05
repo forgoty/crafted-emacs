@@ -14,6 +14,7 @@
 (add-to-list 'package-selected-packages 'evil)
 (add-to-list 'package-selected-packages 'evil-collection)
 (add-to-list 'package-selected-packages 'evil-nerd-commenter)
+(add-to-list 'package-selected-packages 'evil-anzu)
 
 ;; Emacs 28+ prefer the built-in undo-redo facility, but for older
 ;; versions, undo-tree is a nice option.

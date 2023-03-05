@@ -35,6 +35,10 @@
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 
+;; Cursor
+(blink-cursor-mode 0)
+(set-cursor-color "#e9912a")
+
 ;; Prevent unwanted runtime builds in gccemacs (native-comp); packages are
 ;; compiled ahead-of-time when they are installed and site files are compiled
 ;; when gccemacs is installed.

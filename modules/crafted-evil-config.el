@@ -10,7 +10,6 @@
 ;; Evil mode configuration, for those who prefer `Vim' keybindings.
 
 ;;; Code:
-
 ;; Turn on undo-tree globally for version older than 28.  Use
 ;; undo-redo for Emacs 28+
 (when (and (< emacs-major-version 28)
@@ -40,8 +39,9 @@ Take some of the default keybindings for evil mode."
 (require 'evil)
 (evil-mode 1)
 
-;; Make evil search more like vim
-(evil-select-search-module 'evil-search-module 'evil-search)
+;; Load evil-anzu to improve search
+(with-eval-after-load 'evil
+  (require 'evil-anzu))
 
 ;; Turn on Evil Nerd Commenter
 (evilnc-default-hotkeys)

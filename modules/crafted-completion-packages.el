@@ -20,6 +20,7 @@
 (add-to-list 'package-selected-packages 'marginalia)
 (add-to-list 'package-selected-packages 'orderless)
 (add-to-list 'package-selected-packages 'vertico)
+(add-to-list 'package-selected-packages 'vertico-directory)
 
 
 (provide 'crafted-completion-packages)

@@ -21,9 +21,12 @@
       doom-modeline-lsp t
       doom-modeline-github nil
       doom-modeline-mu4e nil
-      doom-modeline-irc t
-      doom-modeline-minor-modes t
+      doom-modeline-irc nil
       doom-modeline-persp-name nil
+      doom-modeline-persp-icon nil
+      doom-modeline-env-version nil
+      doom-modeline-gnus nil
+      doom-modeline-buffer-encoding t
       doom-modeline-buffer-file-name-style 'truncate-except-project
       doom-modeline-major-mode-icon nil)
 

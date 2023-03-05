@@ -66,7 +66,7 @@ also enables undo functionality if the window layout changes."
 
 ;; Turning on `winner-mode' provides an "undo" function for resetting
 ;; your window layout.  We bind this to `C-c w u' for winner-undo and
-;; `C-c w r' for winner-redo (see below). 
+;; `C-c w r' for winner-redo (see below).
 (winner-mode 1)
 
 (define-prefix-command 'crafted-windows-key-map)
@@ -79,29 +79,6 @@ also enables undo functionality if the window layout changes."
 (keymap-set 'crafted-windows-key-map "f" 'windmove-right)
 
 (keymap-global-set crafted-windows-prefix-key 'crafted-windows-key-map)
-
-
-;;; Mastering Emacs inspired configuration defaults
-;; Completions
-(customize-set-variable 'completion-cycle-threshold 3)
-(customize-set-variable 'tab-always-indent 'complete)
-(customize-set-variable 'completion-category-overrides
-                        '((file (styles . (partial-completion)))))
-(customize-set-variable 'completions-detailed t)
-(if (version< emacs-version "28")
-    (icomplete-mode 1)
-  (fido-vertical-mode 1))               ; fido-vertical-mode is
-                                        ; available beginning in Emacs
-                                        ; 28
-
-(when (version< emacs-version "28")
-  (defun crafted-mastering-emacs-use-icomplete-vertical ()
-    "Install and enable icomplete-vertical-mode for Emacs versions
-less than 28."
-    (interactive)
-    (crafted-package-install-package 'icomplete-vertical)
-    (icomplete-mode 1)
-    (icomplete-vertical-mode 1)))
 
 ;; Window configuration for special windows.
 ;; This section inspired by the article "Demystifying Emacs’s Window
