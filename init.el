@@ -39,6 +39,7 @@
 
 ;; IDE features
 (require 'crafted-golang-packages)
+(require 'crafted-custom-js-ts-packages)
 
 ;; Install the packages listed in the `package-selected-packages' list.
 (package-install-selected-packages :noconfirm)

@@ -7,8 +7,7 @@
 (load "~/.config/crafted-emacs/modules/crafted-early-init-config")
 
 ;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6)
+(setq gc-cons-threshold most-positive-fixnum)
 
 ;; Silence compiler warnings as they can be pretty disruptive
 (setq comp-async-report-warnings-errors nil)
@@ -37,7 +36,6 @@
 
 ;; Cursor
 (blink-cursor-mode 0)
-(set-cursor-color "#e9912a")
 
 ;; Prevent unwanted runtime builds in gccemacs (native-comp); packages are
 ;; compiled ahead-of-time when they are installed and site files are compiled

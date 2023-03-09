@@ -61,7 +61,7 @@
      ("stable" . 70)
      ("melpa" . 0)))
  '(package-selected-packages
-   '(tabspaces flycheck-golangci-lint go-mode popwin flycheck-pos-tip flycheck evil-visualstar evil-surround ibuffer-project aggressive-indent editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter evil-iedit-state iedit restart-emacs rg winum which-key general evil-embrace evil-nerd-commentary doom-modeline doom-themes helpful elisp-demos all-the-icons org-appear eglot evil-nerd-commenter evil-collection evil vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+   '(typescript-mode tabspaces flycheck-golangci-lint go-mode popwin flycheck-pos-tip flycheck evil-visualstar evil-surround ibuffer-project aggressive-indent editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter evil-iedit-state iedit restart-emacs rg winum which-key general evil-embrace evil-nerd-commentary doom-modeline doom-themes helpful elisp-demos all-the-icons org-appear eglot evil-nerd-commenter evil-collection evil vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
  '(scroll-conservatively 101)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position t)
