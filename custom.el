@@ -19,7 +19,7 @@
   (eglot-code-actions nil nil "source.organizeImports" t))
 
 (setq project-vc-extra-root-markers
-   '("package.json" "go.mod" "requirements.txt"))
+      '("package.json" "requirements.txt"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

@@ -17,6 +17,16 @@
   (setq-local tab-width go-tab-width)
   (setq-local evil-shift-width go-tab-width))
 
+(defun project-find-go-module (dir)
+  (when-let ((root (locate-dominating-file dir "go.mod")))
+    (cons 'go-module root)))
+
+(cl-defmethod project-root ((project (head go-module)))
+  (cdr project))
+
+;; Find project
+(add-hook 'project-find-functions #'project-find-go-module)
+
 ;; Pre-save hooks
 (add-hook 'before-save-hook 'custom/eglot-organize-imports)
 (add-hook 'before-save-hook 'eglot-format-buffer)
