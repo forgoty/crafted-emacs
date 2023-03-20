@@ -15,7 +15,7 @@
 (add-to-list 'package-selected-packages 'flycheck-pos-tip)
 (add-to-list 'package-selected-packages 'popwin)
 (add-to-list 'package-selected-packages 'restart-emacs)
-(add-to-list 'package-selected-packages 'tree-sitter)
+(add-to-list 'package-selected-packages 'magit)
 
 (provide 'crafted-custom-tools-packages)
 ;;; crafted-custom-tools-packages.el ends here

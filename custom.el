@@ -11,7 +11,7 @@
   (save-some-buffers t))
 
 (defun eglot--spinner (args)
-  "asdf"
+  "Needed for backport prior emacs 29"
   (eglot--progress-reporters args))
 
 (defun custom/eglot-organize-imports ()
@@ -61,7 +61,7 @@
      ("stable" . 70)
      ("melpa" . 0)))
  '(package-selected-packages
-   '(typescript-mode tabspaces flycheck-golangci-lint go-mode popwin flycheck-pos-tip flycheck evil-visualstar evil-surround ibuffer-project aggressive-indent editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter evil-iedit-state iedit restart-emacs rg winum which-key general evil-embrace evil-nerd-commentary doom-modeline doom-themes helpful elisp-demos all-the-icons org-appear eglot evil-nerd-commenter evil-collection evil vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+   '(magit typescript-mode tabspaces flycheck-golangci-lint go-mode popwin flycheck-pos-tip flycheck evil-visualstar evil-surround ibuffer-project aggressive-indent editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter evil-iedit-state iedit restart-emacs rg winum which-key general evil-embrace evil-nerd-commentary doom-modeline doom-themes helpful elisp-demos all-the-icons org-appear eglot evil-nerd-commenter evil-collection evil vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
  '(scroll-conservatively 101)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position t)
@@ -69,6 +69,7 @@
  '(switch-to-buffer-obey-display-actions t)
  '(tab-always-indent 'complete)
  '(tabspaces-include-buffers '("*scratch*"))
+ '(tabspaces-mode t)
  '(tabspaces-remove-to-default t)
  '(tabspaces-use-filtered-buffers-as-default t)
  '(vertico-cycle t)

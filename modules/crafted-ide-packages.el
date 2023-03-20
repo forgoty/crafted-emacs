@@ -19,7 +19,7 @@
   (add-to-list 'package-selected-packages 'eglot)
 
   ;; tree-sitter syntax aware packages
-  (add-to-list 'package-selected-packages 'tree-sitter                )
+  (add-to-list 'package-selected-packages 'tree-sitter)
   (add-to-list 'package-selected-packages 'tree-sitter-indent)
   (add-to-list 'package-selected-packages 'tree-sitter-ispell)
   (add-to-list 'package-selected-packages 'tree-sitter-langs))
@@ -36,10 +36,6 @@
 ;; editorconfig is a cross-editor/ide configuration tool to control
 ;; indentation, spaces vs tabs, etc.
 (add-to-list 'package-selected-packages 'editorconfig)
-
-;; a minor mode to always keep your code indented while editing blocks
-;; of code.
-(add-to-list 'package-selected-packages 'aggressive-indent)
 
 ;; as most development is done on projects, add ibuffer-project to
 ;; group project buffers together when listing buffers with ibuffer

@@ -43,9 +43,8 @@
 (setq comp-deferred-compilation nil)
 
 ;;; Line Numbers
+(setq display-line-numbers-type 'relative)
 (column-number-mode 1)
-(display-line-numbers-mode 1)
-(setq display-line-numbers 'relative)
 (global-display-line-numbers-mode 1)
 
 ;; sentence SHOULD end with only a point.

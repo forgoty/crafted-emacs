@@ -38,9 +38,5 @@ If the error list is visible, hide it.  Otherwise, show it."
     (flycheck-list-errors)
     (switch-to-buffer-other-window flycheck-error-list-buffer)))
 
-;; Enable tools
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-
 (provide 'crafted-custom-tools-config)
 ;;; crafted-custom-tools-config.el ends here

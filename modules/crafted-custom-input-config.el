@@ -109,6 +109,9 @@
   "bp" '(evil-prev-buffer :which-key "previous buffer")
   "bd" '(kill-current-buffer t :which-key "delete buffer"))
 (my-leader-def
+  "g"  '(:ignore t :which-key "git")
+  "gb" '(magit-blame-addition :which-key "blame"))
+(my-leader-def
   "e"  '(:ignore t :which-key "errors")
   "eb" '(flycheck-buffer :which-key "check errors")
   "ec" '(flycheck-clear :which-key "clear errors")

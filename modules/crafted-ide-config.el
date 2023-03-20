@@ -47,9 +47,17 @@ manually with something like this:
 ;; Shutdown server when last managed buffer is killed
 (customize-set-variable 'eglot-autoshutdown t)
 
+;; eglot configuration
+(setq eglot-workspace-configuration
+      '((:gopls .
+                ((buildFlags . ["-tags=unit,integration"])
+                 ))))
+
 ;;; tree-sitter
 ;; Emacs versions prior to 29
 (when (version< emacs-version "29")
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
   (when (featurep 'tree-sitter-langs)
     (require 'tree-sitter-indent nil :noerror)
 
