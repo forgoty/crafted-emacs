@@ -7,7 +7,11 @@
 (load "~/.config/crafted-emacs/modules/crafted-early-init-config")
 
 ;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
+(let ((old-threshold gc-cons-threshold))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq gc-cons-threshold old-threshold)))
+  (setq gc-cons-threshold most-positive-fixnum))
 
 ;; Silence compiler warnings as they can be pretty disruptive
 (setq comp-async-report-warnings-errors nil)
