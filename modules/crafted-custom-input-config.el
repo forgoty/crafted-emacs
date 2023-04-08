@@ -97,7 +97,7 @@
   "s"  '(:ignore t :which-key "search/symbol")
   "ss" '(rg-project :which-key "project search")
   "sc" '(evil-ex-nohighlight :which-key "clear highlight")
-  "se" '(iedit-mode :which-key "clear highlight")
+  "se" '(iedit-mode :which-key "iedit")
   "sw" '(rg-dwim-project-dir :which-key "search a word in a project")
   )
 (my-leader-def

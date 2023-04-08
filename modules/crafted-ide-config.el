@@ -90,11 +90,8 @@ Example: `(crafted-tree-sitter-load 'python)'"
       (add-hook 'prog-mode-hook #'combobulate-mode))))
 
 
-;; turn on aggressive indent if it is available, otherwise use
-;; electric indent.
-(if (require 'aggressive-indent nil :noerror)
-    (add-hook 'prog-mode-hook #'aggressive-indent-mode)
-  (add-hook 'prog-mode-hook #'electric-indent-mode))
+;; use electric indent.
+(add-hook 'prog-mode-hook #'electric-indent-mode)
 
 ;; turn on editorconfig if it is available
 (when (require 'editorconfig nil :noerror)
