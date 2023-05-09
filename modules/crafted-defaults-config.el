@@ -139,7 +139,7 @@ also enables undo functionality if the window layout changes."
 (require 'dumb-jump "dumb-jump" :no-error)
 ;; add hydra to facilitate remembering the keys and actions for dumb-jump
 (when (and (featurep 'hydra)
-	   (featurep 'dumb-jump))
+           (featurep 'dumb-jump))
   (defhydra dumb-jump-hydra (:color blue :columns 3)
     "Dumb Jump"
     ("j" dumb-jump-go "Go")
@@ -159,6 +159,11 @@ also enables undo functionality if the window layout changes."
 ;; use completion system instead of popup window
 (customize-set-variable 'xref-show-definitions-function
                         #'xref-show-definitions-completing-read)
+
+;;; Emacs lisp source/compiled preference
+;; Load source (.el) or the compiled (.elc or .eln) file whichever is
+;; newest
+(customize-set-variable 'load-prefer-newer t)
 
 (provide 'crafted-defaults-config)
 ;;; crafted-defaults-config.el ends here

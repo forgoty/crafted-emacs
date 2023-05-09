@@ -24,7 +24,8 @@
   ;; provide, so we continue to use the `customize-set-variable'
   ;; function for setting user options, unless we have a version guard
   ;; around a block, in which case we use `setopt' instead.
-  (require 'compat))
+  (unless (require 'compat nil :noerror)
+    (package-install 'compat)))
 
 (require 'project)
 
@@ -94,6 +95,7 @@ explicitly."))
 
 ;; Save all customizations to `custom-file'
 (add-hook 'after-init-hook #'customize-save-customized)
+(add-hook 'after-init-hook #'package--save-selected-packages)
 
 (provide 'crafted-init-config)
 ;;; crafted-init-config.el ends here

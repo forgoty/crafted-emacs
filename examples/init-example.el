@@ -26,12 +26,12 @@
 ;; packages for a module, for example,
 ;; `crafted-mastering-emacs-config' does not require any packages to
 ;; be installed.
-(require 'crafted-completion-packages)	; add completion packages to
-					; the
-					; `package-selected-packages'
-					; list
+(require 'crafted-completion-packages)  ; add completion packages to
+                                        ; the
+                                        ; `package-selected-packages'
+                                        ; list
 
-;; Install the packages listed in the `package-selected-packages' list. 
+;; Install the packages listed in the `package-selected-packages' list.
 (package-install-selected-packages :noconfirm)
 
 ;;; Configuration phase
@@ -40,16 +40,11 @@
 ;; they are here for example purposes.  Find the modules which work
 ;; for you and add them here.
 (require 'crafted-defaults-config)
-(require 'crafted-mastering-emacs-config)
 (require 'crafted-startup-config)
 (unless crafted-startup-inhibit-splash
   (setq initial-buffer-choice #'crafted-startup-screen))
 
 ;;; Optional configuration
-
-;;; Emacs lisp source/compiled preference
-;; Prefer loading newest compiled .el file
-(customize-set-variable 'load-prefer-newer t)
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
@@ -59,4 +54,3 @@
 
 ;; Set default coding system (especially for Windows)
 (set-default-coding-systems 'utf-8)
-
