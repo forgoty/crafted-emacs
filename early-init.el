@@ -47,9 +47,10 @@
 (setq comp-deferred-compilation nil)
 
 ;;; Line Numbers
-(setq display-line-numbers-type 'relative)
-(column-number-mode 1)
-(global-display-line-numbers-mode 1)
+;; Uncomment to see line numbers
+; (setq display-line-numbers-type 'relative)
+; (column-number-mode 1)
+; (global-display-line-numbers-mode 1)
 
 ;; sentence SHOULD end with only a point.
 (setq sentence-end-double-space nil)
