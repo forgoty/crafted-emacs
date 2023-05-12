@@ -41,5 +41,10 @@
 ;; group project buffers together when listing buffers with ibuffer
 (add-to-list 'package-selected-packages 'ibuffer-project)
 
+;; Custom
+(add-to-list 'package-selected-packages 'protobuf-mode)
+(add-to-list 'package-selected-packages 'yaml-mode)
+(add-to-list 'package-selected-packages 'dockerfile-mode)
+
 (provide 'crafted-ide-packages)
 ;;; crafted-ide-packages.el ends here
