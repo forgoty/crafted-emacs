@@ -49,8 +49,11 @@
 ;;; Line Numbers
 ;; Uncomment to see line numbers
 ; (setq display-line-numbers-type 'relative)
-; (column-number-mode 1)
 ; (global-display-line-numbers-mode 1)
+
+;; View line/columen position in modeline
+(setq column-number-mode t)
+(setq line-number-mode t)
 
 ;; sentence SHOULD end with only a point.
 (setq sentence-end-double-space nil)
