@@ -56,6 +56,7 @@ configuration journey.
 * Getting Started::
 * Customization::
 * Contributing::
+* Modules::
 * Troubleshooting::
 * MIT License::
 
@@ -101,6 +102,16 @@ The ‘custom.el’ file
 
 * Simplified overview of how Emacs Customization works::
 * Loading the ‘custom.el’ file: Loading the customel file.
+
+Modules
+
+* Crafted Emacs Org Module::
+
+Crafted Emacs Org Module
+
+* Installation::
+* Description::
+* Alternative package org-roam::
 
 Troubleshooting
 
@@ -290,9 +301,9 @@ your home folder.
 
      git clone https://github.com/SystemCrafters/crafted-emacs
 
-     # N.B. As this is still an alpha release, make sure to also execute the following command:
+     # N.B. As this is still a beta release, make sure to also execute the following command:
 
-     git checkout craftedv2alpha
+     git checkout craftedv2beta
 
    For the rest of this document, the location where you checked out
 Crafted Emacs will be known as ‘crafted-emacs-home’.
@@ -308,8 +319,8 @@ discussed here.  We will briefly cover the ‘early-init.el’ file which
 Emacs allows user to affect some configuration options which occur
 before Emacs draws the initial frame (often known as the "window" in a
 graphical windowing system).  For more information about this file, see
-the entry in the Emacs info system: [*note (emacs)Early:: Init
-File][Early Init File]], or on the web: Early Init File
+the entry in the Emacs info system: *note Early Init File: (emacs)Early
+Init File, or on the web: Early Init File
 (https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html).
 
    Emacs looks for initialization files in several defined places.  For
@@ -816,7 +827,7 @@ values configured than just these.
 Listing 5.2: Example auto-generated ‘custom.el’ file.
 
 
-File: crafted-emacs.info,  Node: Contributing,  Next: Troubleshooting,  Prev: Customization,  Up: Top
+File: crafted-emacs.info,  Node: Contributing,  Next: Modules,  Prev: Customization,  Up: Top
 
 6 Contributing
 **************
@@ -834,9 +845,165 @@ your idea is in the spirit of the *note Principles::.
 SystemCrafters (https://systemcrafters.net/) community!
 
 
-File: crafted-emacs.info,  Node: Troubleshooting,  Next: MIT License,  Prev: Contributing,  Up: Top
+File: crafted-emacs.info,  Node: Modules,  Next: Troubleshooting,  Prev: Contributing,  Up: Top
 
-7 Troubleshooting
+7 Modules
+*********
+
+Crafted Emacs includes a number of modules to further configure Emacs.
+These are intended to be stand-alone in the sense that no module
+requires the use of any other module.
+
+   The modules are written to support various themes, for example
+mini-buffer selection (completion), writing or ui.  For how to use them,
+see the *note Getting Started:: section of the manual.
+
+   While the intent here is to document each module as completely as
+reasonably possible, the best-practice is to simply read the code for
+the module of interest to understand it best.
+
+   Module documentation may include additional information on related,
+popular packages and a small example on how to extend your configuration
+while using the same package installation methods as Crafted Emacs.
+
+* Menu:
+
+* Crafted Emacs Org Module::
+
+
+File: crafted-emacs.info,  Node: Crafted Emacs Org Module,  Up: Modules
+
+7.1 Crafted Emacs Org Module
+============================
+
+* Menu:
+
+* Installation::
+* Description::
+* Alternative package org-roam::
+
+
+File: crafted-emacs.info,  Node: Installation,  Next: Description,  Up: Crafted Emacs Org Module
+
+7.1.1 Installation
+------------------
+
+To use this module, simply require them in your ‘init.el’ at the
+appropriate points.
+
+     ;; add crafted-org package definitions to selected packages list
+     (require 'crafted-org-packages)
+
+     ;; install the packages
+     (package-install-selected-packages :noconfirm)
+
+     ;; Load crafted-org configuration
+     (require 'crafted-org-config)
+
+
+File: crafted-emacs.info,  Node: Description,  Next: Alternative package org-roam,  Prev: Installation,  Up: Crafted Emacs Org Module
+
+7.1.2 Description
+-----------------
+
+The ‘crafted-org’ module configures various settings related to
+‘org-mode’ as well as installing a few additional related packages to
+enhance the experience.
+
+   • ‘org-return-follows-link’: ‘t’
+
+     Pressing ‘<RET>’ while the cursor is over a link will follow the
+     link.
+
+   • ‘org-mouse-1-follows-link’: ‘t’
+
+     Pressing ‘<Mouse 1>’ (usually left-click) while the cursor is over
+     a link will follow the link.
+
+   • ‘org-link-descriptive’: ‘t’
+
+     Display links in a prettified style, only showing the description
+     (if provided).
+
+   • New ‘org-mode-hook’: ‘org-indent-mode’
+
+     Visually indent org-mode files to a given header level.
+
+   • ‘org-hide-emphasis-markers’: ‘t’
+
+     Hides emphasis markers like ‘*bold*’ or ‘=highlighted=’.
+
+   • New ‘org-mode-hook’:
+
+     Adding a hook to org-mode setting the local
+     ‘electric-pair-inhibit-predicate’ value to ignore ‘<’ for
+     auto-pairing.
+
+   • ‘Package: denote’
+
+     Denote is a simple note-taking system for Emacs.  It is entirely
+     based around file-naming conventions.
+
+     It works with org, markdown and even basic text (txt) notes.  If
+     you have denote installed, *note denote: (denote)Top.
+
+   • ‘Package: org-appear’
+
+     org-appear automatically toggles the appearance of certain elements
+     in org-mode when editing in the surrounded region.  This is
+     combined with the org-mode setting ‘org-hide-emphasis-markers’ to
+     only show markers when editing a region.
+
+     org-appear-mode is added as a hook to ‘org-mode-hook’, enabling
+     when visiting an org-mode buffer.
+
+
+File: crafted-emacs.info,  Node: Alternative package org-roam,  Prev: Description,  Up: Crafted Emacs Org Module
+
+7.1.3 Alternative package: ‘org-roam’
+-------------------------------------
+
+‘org-roam’ is an alternative package option to ‘denote’.  Compared to
+denote, it uses a SQLite database to organize notes and links.  It
+requires a C compiler as an external dependency to interface with the
+database.
+
+   Installation:
+
+     (add-to-list 'package-selected-packages 'org-roam)
+     (package-install-selected-packages :noconfirm)
+
+   Example configuration:
+
+     ;; Setting the storage directory:
+     ;; Stores org-roam data in a subdirectory under the emacs directory
+     (customize-set-variable 'org-roam-directory
+                             (expand-file-name "org-roam" user-emacs-directory))
+
+     ;; If you're using a vertical completion framework, you might want a
+     ;; more informative completion interface:
+     (when (or (bound-and-true-p fido-vertical-mode)
+               (bound-and-true-p icomplete-vertical-mode)
+               (bound-and-true-p vertico))
+       (customize-set-variable 'org-roam-node-display-template
+                               (concat "${title:*} "
+                                       (propertize "${tags:10}" 'face 'org-tag))))
+
+     ;; suggested keymap based on example from project documentation
+     (keymap-global-set "C-c r l" #'org-roam-buffer-toggle)
+     (keymap-global-set "C-c r f" #'org-roam-node-find)
+     (keymap-global-set "C-c r g" #'org-roam-graph)
+     (keymap-global-set "C-c r i" #'org-roam-node-insert)
+     (keymap-global-set "C-c r c" #'org-roam-capture)
+     (keymap-global-set "C-c r j" . org-roam-dailies-capture-today)
+
+     ;; Enable automatic sync of the SQLite database
+     (org-roam-db-autosync-mode)
+
+
+File: crafted-emacs.info,  Node: Troubleshooting,  Next: MIT License,  Prev: Modules,  Up: Top
+
+8 Troubleshooting
 *****************
 
 Some tips when things don’t seem to work right.
@@ -848,7 +1015,7 @@ Some tips when things don’t seem to work right.
 
 File: crafted-emacs.info,  Node: A package (suddenly?) fails to work,  Up: Troubleshooting
 
-7.1 A package (suddenly?) fails to work
+8.1 A package (suddenly?) fails to work
 =======================================
 
 This scenario happened frequently when upgading to Emacs 28.  It also
@@ -950,38 +1117,43 @@ Appendix A MIT License
 
 Tag Table:
 Node: Top1410
-Node: Goals3440
-Node: Principles4490
-Node: Minimal modular configuration4821
-Node: Prioritize built-in Emacs functionality5457
-Node: Can be integrated with a Guix configuration6251
-Node: Helps you learn Emacs Lisp6808
-Node: Reversible7343
-Node: Why use it?7614
-Node: Getting Started8291
-Node: Starting from scratch8512
-Node: Prerequisites9358
-Node: Early Emacs Initialization10463
-Node: Emacs Initialization12827
-Ref: Basic Configuration14210
-Node: Starting from an existing configuration16908
-Node: Crafted Modules with use-package19113
-Node: Crafted modules with externally installed Emacs packages20192
-Node: Customization21576
-Node: Managing packages21819
-Node: Configuring a package manager22073
-Node: Installing packages25486
-Node: Using alternate package managers27129
-Node: Example Configuration28796
-Ref: orgbf85af528981
-Node: The customel file29514
-Node: Simplified overview of how Emacs Customization works29896
-Node: Loading the customel file31614
-Ref: customel32787
-Node: Contributing33449
-Node: Troubleshooting34085
-Node: A package (suddenly?) fails to work34326
-Node: MIT License38114
+Node: Goals3584
+Node: Principles4634
+Node: Minimal modular configuration4965
+Node: Prioritize built-in Emacs functionality5601
+Node: Can be integrated with a Guix configuration6395
+Node: Helps you learn Emacs Lisp6952
+Node: Reversible7487
+Node: Why use it?7758
+Node: Getting Started8435
+Node: Starting from scratch8656
+Node: Prerequisites9502
+Node: Early Emacs Initialization10604
+Node: Emacs Initialization12963
+Ref: Basic Configuration14346
+Node: Starting from an existing configuration17044
+Node: Crafted Modules with use-package19249
+Node: Crafted modules with externally installed Emacs packages20328
+Node: Customization21712
+Node: Managing packages21955
+Node: Configuring a package manager22209
+Node: Installing packages25622
+Node: Using alternate package managers27265
+Node: Example Configuration28932
+Ref: org1fbd04829117
+Node: The customel file29650
+Node: Simplified overview of how Emacs Customization works30032
+Node: Loading the customel file31750
+Ref: customel32923
+Node: Contributing33585
+Node: Modules34213
+Node: Crafted Emacs Org Module35141
+Node: Installation35351
+Node: Description35845
+Node: Alternative package org-roam37705
+Node: Troubleshooting39505
+Node: A package (suddenly?) fails to work39741
+Node: MIT License43529
 
 End Tag Table
 

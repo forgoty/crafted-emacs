@@ -18,6 +18,9 @@
 ;; Display links as the description provided
 (customize-set-variable 'org-link-descriptive t)
 
+;; Visually indent org-mode files to a given header level
+(add-hook 'org-mode-hook #'org-indent-mode)
+
 ;; Hide markup markers
 (customize-set-variable 'org-hide-emphasis-markers t)
 (when (featurep 'org-appear)
@@ -28,32 +31,6 @@
                            (setq-local electric-pair-inhibit-predicate
                                        `(lambda (c)
                                           (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
-
-
-;;; Org Roam
-(when (featurep 'org-roam)
-  (unless (eq (custom-variable-state 'org-roam-directory nil)
-              'standard)
-    (customize-set-variable 'org-roam-directory
-                            (expand-file-name "org-roam" user-emacs-directory)))
-  ;; suggested keymap based on example from project docs
-  ;; (keymap-global-set "C-c r l" #'org-roam-buffer-toggle)
-  ;; (keymap-global-set "C-c r f" #'org-roam-node-find)
-  ;; (keymap-global-set "C-c r g" #'org-roam-graph)
-  ;; (keymap-global-set "C-c r i" #'org-roam-node-insert)
-  ;; (keymap-global-set "C-c r c" #'org-roam-capture)
-  ;; (keymap-global-set "C-c r j" . org-roam-dailies-capture-today)
-
-  ;; If you're using a vertical completion framework, you might want a
-  ;; more informative completion interface
-  (when (or (bound-and-true-p fido-vertical-mode)
-            (bound-and-true-p icomplete-vertical-mode)
-            (bound-and-true-p vertico))
-    (customize-set-variable 'org-roam-node-display-template
-                            (concat "${title:*} "
-                                    (propertize "${tags:10}" 'face 'org-tag))))
-  (org-roam-db-autosync-mode))
-
 
 (provide 'crafted-org-config)
 ;;; crafted-org-config.el ends here
