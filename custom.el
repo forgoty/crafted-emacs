@@ -36,6 +36,8 @@
  '(corfu-cycle t)
  '(corfu-echo-documentation 0.25 t)
  '(crafted-updates-fetch-interval "128 hours")
+ '(custom-safe-themes
+   '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" default))
  '(eglot-autoshutdown t t)
  '(evil-respect-visual-line-mode t)
  '(evil-undo-system 'undo-redo)

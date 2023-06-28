@@ -38,5 +38,8 @@ If the error list is visible, hide it.  Otherwise, show it."
     (flycheck-list-errors)
     (switch-to-buffer-other-window flycheck-error-list-buffer)))
 
+;; Custom advices
+(advice-add #'project-find-regexp :override 'consult-ripgrep)
+
 (provide 'crafted-custom-tools-config)
 ;;; crafted-custom-tools-config.el ends here
