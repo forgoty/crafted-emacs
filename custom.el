@@ -63,7 +63,7 @@
      ("stable" . 70)
      ("melpa" . 0)))
  '(package-selected-packages
-   '(eglot typescript-mode flycheck-golangci-lint go-mode magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes dockerfile-mode yaml-mode protobuf-mode ibuffer-project editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+   '(plantuml-mode eglot typescript-mode flycheck-golangci-lint go-mode magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes dockerfile-mode yaml-mode protobuf-mode ibuffer-project editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
  '(scroll-conservatively 101)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position t)

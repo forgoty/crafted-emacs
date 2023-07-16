@@ -105,5 +105,12 @@ Example: `(crafted-tree-sitter-load 'python)'"
               (unless (eq ibuffer-sorting-mode 'project-file-relative)
                 (ibuffer-do-sort-by-project-file-relative)))))
 
+;; PlantUML
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+(add-to-list 'auto-mode-alist '("\\.puml\\'" . plantuml-mode))
+(setq plantuml-executable-path "/usr/bin/plantuml")
+(setq plantuml-default-exec-mode 'executable)
+(setq plantuml-output-type 'png)
+
 (provide 'crafted-ide-config)
 ;;; crafted-ide-config.el ends here

@@ -45,6 +45,7 @@
 (add-to-list 'package-selected-packages 'protobuf-mode)
 (add-to-list 'package-selected-packages 'yaml-mode)
 (add-to-list 'package-selected-packages 'dockerfile-mode)
+(add-to-list 'package-selected-packages 'plantuml-mode)
 
 (provide 'crafted-ide-packages)
 ;;; crafted-ide-packages.el ends here
