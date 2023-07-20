@@ -26,6 +26,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(Man-notify-method 'aggressive t)
+ '(bookmark-save-flag 1 t)
  '(completion-category-overrides '((file (styles partial-completion))))
  '(completion-cycle-threshold 3)
  '(completion-styles '(orderless basic))
@@ -38,7 +40,11 @@
  '(crafted-updates-fetch-interval "128 hours")
  '(custom-safe-themes
    '("e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" default))
+ '(dired-auto-revert-buffer t)
+ '(dired-dwim-target t)
+ '(ediff-window-setup-function 'ediff-setup-windows-plain t)
  '(eglot-autoshutdown t t)
+ '(eshell-scroll-to-bottom-on-input 'this t)
  '(evil-respect-visual-line-mode t)
  '(evil-undo-system 'undo-redo)
  '(evil-want-C-h-delete t)
@@ -63,7 +69,7 @@
      ("stable" . 70)
      ("melpa" . 0)))
  '(package-selected-packages
-   '(plantuml-mode eglot typescript-mode flycheck-golangci-lint go-mode magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes dockerfile-mode yaml-mode protobuf-mode ibuffer-project editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+   '(aggressive-indent plantuml-mode eglot typescript-mode flycheck-golangci-lint go-mode magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes dockerfile-mode yaml-mode protobuf-mode ibuffer-project editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
  '(scroll-conservatively 101)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position t)
