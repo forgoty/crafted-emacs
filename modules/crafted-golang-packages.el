@@ -11,7 +11,7 @@
 
 ;;; Code:
 (add-to-list 'package-selected-packages 'eglot)
-(add-to-list 'package-selected-packages 'go-mode)
+(add-to-list 'package-selected-packages 'go-ts-mode)
 (add-to-list 'package-selected-packages 'flycheck-golangci-lint)
 (provide 'crafted-golang-packages)
 ;;; crafted-golang-packages.el ends here

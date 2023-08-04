@@ -47,48 +47,31 @@ manually with something like this:
 ;; Shutdown server when last managed buffer is killed
 (customize-set-variable 'eglot-autoshutdown t)
 
-;; eglot configuration
-(setq eglot-workspace-configuration
-      '((:gopls .
-                ((buildFlags . ["-tags=unit,integration"])
-                 ))))
+;; Tree-Sitter confiugration
+(setq treesit-language-source-alist
+   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+     (c "https://github.com/tree-sitter/tree-sitter-c")
+     (cmake "https://github.com/uyha/tree-sitter-cmake")
+     (css "https://github.com/tree-sitter/tree-sitter-css")
+     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (go "https://github.com/tree-sitter/tree-sitter-go")
+     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
+     (plantuml "https://github.com/lyndsysimon/tree-sitter-plantuml")
+     (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+     (proto "https://github.com/mitchellh/tree-sitter-proto")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
-;;; tree-sitter
-;; Emacs versions prior to 29
-(when (version< emacs-version "29")
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (when (featurep 'tree-sitter-langs)
-    (require 'tree-sitter-indent nil :noerror)
-
-    (defun crafted-tree-sitter-load (lang-symbol)
-      "Setup tree-sitter for a language.
-
-This must be called in the user's configuration to configure
-tree-sitter for LANG-SYMBOL.
-
-Example: `(crafted-tree-sitter-load 'python)'"
-      (tree-sitter-require lang-symbol)
-      (let ((mode-hook-name
-             (intern (concat (symbol-name lang-symbol) "-mode-hook"))))
-        (add-hook mode-hook-name #'tree-sitter-mode)))))
-
-;; Emacs versions after 29
-(when (version< "29" emacs-version)
-  ;; only attempt to use tree-sitter when Emacs was built with it.
-  (when (and (member "TREE_SITTER" (split-string system-configuration-features))
-             (executable-find "tree-sitter"))
-    (when (featurep 'treesit-auto)
-      ;; prefer tree-sitter modes
-      (global-treesit-auto-mode)
-      (with-eval-after-load 'treesit-auto
-        ;; install all the tree-sitter grammars
-        (treesit-auto-install-all)))
-    (when (featurep 'combobulate)
-      ;; perhaps too gross of an application, but the *-ts-modes
-      ;; eventually derive from this mode.
-      (add-hook 'prog-mode-hook #'combobulate-mode))))
-
+;; Turn on max hightlights
+(setq treesit-font-lock-level 4)
 
 ;; use electric indent.
 (add-hook 'prog-mode-hook #'electric-indent-mode)
@@ -111,6 +94,18 @@ Example: `(crafted-tree-sitter-load 'python)'"
 (setq plantuml-executable-path "/usr/bin/plantuml")
 (setq plantuml-default-exec-mode 'executable)
 (setq plantuml-output-type 'png)
+
+;; Dockerfile
+(add-to-list 'auto-mode-alist '("\\dockerfile\\'" . dockerfile-ts-mode))
+(add-to-list 'auto-mode-alist '("\\Dockerfile\\'" . dockerfile-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.Dockerfile\\'" . dockerfile-ts-mode))
+
+;; Yaml
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
+
+;; Proto
+(add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-ts-mode))
 
 (provide 'crafted-ide-config)
 ;;; crafted-ide-config.el ends here

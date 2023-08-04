@@ -10,7 +10,5 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'package-selected-packages 'typescript-mode)
-
 (provide 'crafted-custom-js-ts-packages)
 ;;; crafted-custom-js-ts-packages.el ends here

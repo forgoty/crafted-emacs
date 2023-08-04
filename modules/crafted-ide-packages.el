@@ -11,28 +11,6 @@
 
 ;;; Code:
 
-
-;; Add Eglot only for Emacs prior to version 29.  It is built-in since
-;; Emacs 29.
-(when (version< emacs-version "29")
-  ;; LSP capabilities
-  (add-to-list 'package-selected-packages 'eglot)
-
-  ;; tree-sitter syntax aware packages
-  (add-to-list 'package-selected-packages 'tree-sitter)
-  (add-to-list 'package-selected-packages 'tree-sitter-indent)
-  (add-to-list 'package-selected-packages 'tree-sitter-ispell)
-  (add-to-list 'package-selected-packages 'tree-sitter-langs))
-
-;; Emacs 29 packages
-(when (version< "29" emacs-version)
-  ;; automatically handles switching to tree-sitter versions of major
-  ;; modes, can install grammars, etc.
-  (add-to-list 'package-selected-packages 'treesit-auto)
-
-  ;; code navigation using tree-sitter grammars.
-  (add-to-list 'package-selected-packages 'combobulate))
-
 ;; editorconfig is a cross-editor/ide configuration tool to control
 ;; indentation, spaces vs tabs, etc.
 (add-to-list 'package-selected-packages 'editorconfig)
@@ -41,11 +19,8 @@
 ;; group project buffers together when listing buffers with ibuffer
 (add-to-list 'package-selected-packages 'ibuffer-project)
 
-;; Custom
-(add-to-list 'package-selected-packages 'protobuf-mode)
-(add-to-list 'package-selected-packages 'yaml-mode)
-(add-to-list 'package-selected-packages 'dockerfile-mode)
-(add-to-list 'package-selected-packages 'plantuml-mode)
+;; Packages
+(add-to-list 'package-selected-packages 'protobuf-ts-mode)
 
 (provide 'crafted-ide-packages)
 ;;; crafted-ide-packages.el ends here

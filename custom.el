@@ -69,7 +69,7 @@
      ("stable" . 70)
      ("melpa" . 0)))
  '(package-selected-packages
-   '(aggressive-indent plantuml-mode eglot typescript-mode flycheck-golangci-lint go-mode magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes dockerfile-mode yaml-mode protobuf-mode ibuffer-project editorconfig tree-sitter-langs tree-sitter-ispell tree-sitter-indent tree-sitter helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+   '(protobuf-ts-mode aggressive-indent plantuml-mode eglot flycheck-golangci-lint magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes ibuffer-project editorconfig helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
  '(scroll-conservatively 101)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position t)
@@ -88,8 +88,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(font-lock-function-name-face ((t (:foreground "#fabd2f"))))
- '(font-lock-type-face ((t (:foreground "#d3869b"))))
- '(tree-sitter-hl-face:function ((t (:inherit font-lock-function-name-face :slant normal))))
- '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face :underline nil))))
- '(tree-sitter-hl-face:method.call ((t (:inherit tree-sitter-hl-face:function.call :slant normal))))
- '(tree-sitter-hl-face:property ((t (:inherit font-lock-constant-face :foreground "#8ec07c" :slant italic)))))
+ '(font-lock-type-face ((t (:foreground "#d3869b")))))

@@ -11,5 +11,13 @@
 
 ;;; Code:
 
+;; Pre-save hooks
+
+(add-hook 'typescript-ts-mode-hook #'eglot-ensure)
+(add-hook 'typescript-ts-mode-hook 'flycheck-mode)
+
+;; Enable folding
+(add-hook 'typescript-ts-mode-hook #'hs-minor-mode)
+
 (provide 'crafted-custom-js-ts-config)
 ;;; crafted-custom-js-ts-config.el ends here
