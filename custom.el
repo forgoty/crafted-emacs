@@ -90,6 +90,6 @@
  '(font-lock-function-name-face ((t (:foreground "#fabd2f"))))
  '(font-lock-type-face ((t (:foreground "#d3869b"))))
  '(tree-sitter-hl-face:function ((t (:inherit font-lock-function-name-face :slant normal))))
- '(tree-sitter-hl-face:function\.call ((t (:inherit font-lock-function-name-face :underline nil))))
- '(tree-sitter-hl-face:method\.call ((t (:inherit tree-sitter-hl-face:function\.call :slant normal))))
+ '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face :underline nil))))
+ '(tree-sitter-hl-face:method.call ((t (:inherit tree-sitter-hl-face:function.call :slant normal))))
  '(tree-sitter-hl-face:property ((t (:inherit font-lock-constant-face :foreground "#8ec07c" :slant italic)))))
