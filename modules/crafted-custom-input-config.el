@@ -93,7 +93,15 @@
   "6" '(winum-select-window-6 :which-key "select window 6")
   "7" '(winum-select-window-7 :which-key "select window 7")
   "8" '(winum-select-window-8 :which-key "select window 8")
-  "9" '(winum-select-window-9 :which-key "select window 9"))
+  "9" '(winum-select-window-9 :which-key "select window 9")
+  "bb" '(consult-buffer :which-key "list buffers")
+  "bs" '(save-buffer :which-key "save file")
+  "bD" '(custom/kill-other-buffers :which-key "kill other buffers")
+  "bb" '(consult-buffer :which-key "list buffers")
+  "bn" '(evil-next-buffer :which-key "next buffer")
+  "bp" '(evil-prev-buffer :which-key "previous buffer")
+  "bd" '(kill-current-buffer t :which-key "delete buffer")
+  "wd" '(evil-window-delete t :which-key "window delete"))
 
 (my-leader-def
   "q"  '(:ignore t :which-key "quit/restart")
