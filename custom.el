@@ -14,10 +14,6 @@
   "Needed for backport prior emacs 29"
   (eglot--progress-reporters args))
 
-(defun custom/eglot-organize-imports ()
-  (interactive)
-  (eglot-code-actions nil nil "source.organizeImports" t))
-
 (setq project-vc-extra-root-markers
       '("package.json" "requirements.txt"))
 
