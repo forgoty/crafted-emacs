@@ -77,6 +77,24 @@
   "7" '(winum-select-window-7 :which-key "select window 7")
   "8" '(winum-select-window-8 :which-key "select window 8")
   "9" '(winum-select-window-9 :which-key "select window 9"))
+
+;; same as previous but this keybindings shouldn't be overriden by any modes
+;; for example as dired-mode
+(general-define-key
+ :states 'normal
+ :keymaps 'override
+ :prefix my-leader-key
+  "SPC" '(execute-extended-command :which-key "M-x")
+  "1" '(winum-select-window-1 :which-key "select window 1")
+  "2" '(winum-select-window-2 :which-key "select window 2")
+  "3" '(winum-select-window-3 :which-key "select window 3")
+  "4" '(winum-select-window-4 :which-key "select window 4")
+  "5" '(winum-select-window-5 :which-key "select window 5")
+  "6" '(winum-select-window-6 :which-key "select window 6")
+  "7" '(winum-select-window-7 :which-key "select window 7")
+  "8" '(winum-select-window-8 :which-key "select window 8")
+  "9" '(winum-select-window-9 :which-key "select window 9"))
+
 (my-leader-def
   "q"  '(:ignore t :which-key "quit/restart")
   "qq" '(evil-quit :which-key "quit")
