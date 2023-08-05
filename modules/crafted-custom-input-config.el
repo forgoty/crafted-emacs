@@ -40,6 +40,8 @@
 
 ; go to definition other window
 (evil-define-key 'normal global-map "gD" 'xref-find-definitions-other-window)
+; find implementation
+(evil-define-key 'normal global-map "gi" 'eglot-find-implementation)
 
 ;; Evil-surround
 (global-evil-surround-mode 1)

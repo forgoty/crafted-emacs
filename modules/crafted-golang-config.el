@@ -16,6 +16,9 @@
   "Call this when go-ts-mode is enabled."
   (setq-local tab-width go-tab-width)
   (setq-local evil-shift-width go-tab-width))
+  (add-hook 'before-save-hook 'eglot-format-buffer)
+  (add-hook 'before-save-hook 'custom/eglot-organize-imports)
+
 
 (defun project-find-go-module (dir)
   (when-let ((root (locate-dominating-file dir "go.mod")))
@@ -30,25 +33,23 @@
                 ((buildFlags . ["-tags=unit,integration"])
                  ))))
 
+;; Associated go files with go-ts-mode
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 
 ;; Find project
 (add-hook 'project-find-functions #'project-find-go-module)
 
-;; Pre-save hooks
-(add-hook 'before-save-hook 'custom/eglot-organize-imports)
-(add-hook 'before-save-hook 'eglot-format-buffer)
-
 (add-hook 'go-ts-mode-hook #'eglot-ensure)
 (add-hook 'go-ts-mode-hook 'go//hooks)
+
+;; Flycheck
 (add-hook 'go-ts-mode-hook 'flycheck-mode)
+(eval-after-load 'flycheck                                       
+  '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
+
 
 ;; Enable folding
 (add-hook 'go-ts-mode-hook #'hs-minor-mode)
-
-;; Enable golangci-lint to flycheck
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
 
 (provide 'crafted-golang-config)
 ;;; crafted-golang-config.el ends here
