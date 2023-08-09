@@ -15,6 +15,7 @@
 (add-to-list 'package-selected-packages 'evil-surround)
 (add-to-list 'package-selected-packages 'evil-visualstar)
 (add-to-list 'package-selected-packages 'evil-iedit-state)
+(add-to-list 'package-selected-packages 'evil-textobj-tree-sitter)
 (add-to-list 'package-selected-packages 'general)
 (add-to-list 'package-selected-packages 'which-key)
 (add-to-list 'package-selected-packages 'winum)

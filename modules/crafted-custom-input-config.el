@@ -35,6 +35,11 @@
 (evil-define-key 'visual global-map "<" 'custom/evil-shift-left-visual)
 (evil-define-key 'visual global-map ">" 'custom/evil-shift-right-visual)
 
+; Custom evil-textobj-tree-sitter
+;; bind `function.outer`(entire function block) to `f` for use in things like `vaf`, `yaf`
+(define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+(define-key evil-outer-text-objects-map "a" (evil-textobj-tree-sitter-get-textobj "class.outer"))
+
 ; gc to comment lines in visual mode
 (define-key evil-visual-state-map "gc" 'evilnc-comment-operator)
 
@@ -154,6 +159,13 @@
   "en" '(flycheck-next-error :which-key "next error")
   "ep" '(flycheck-previous-error :which-key "prev errors")
   "ex" '(flycheck-explain-error-at-point t :which-key "explain error"))
+(my-leader-def
+  "z"  '(:ignore t :which-key "zoom/narrow")
+  "zi" '(text-scale-increase :which-key "zoom in")
+  "zo" '(text-scale-decrease :which-key "zoom out")
+  "zn"  '(:ignore t :which-key "narrow")
+  "zni" '(narrow-to-region :which-key "narrow in")
+  "zno" '(narrow-to-page :which-key "narrow out"))
 
 (provide 'crafted-custom-input-config)
 ;;; crafted-custom-input-config.el ends here
