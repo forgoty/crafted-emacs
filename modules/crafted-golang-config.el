@@ -92,12 +92,6 @@
 (cl-defmethod project-root ((project (head go-module)))
   (cdr project))
 
-;; eglot configuration
-(setq eglot-workspace-configuration
-      '((:gopls .
-                ((buildFlags . ["-tags=unit,integration"])
-                 ))))
-
 ;; Associated go files with go-ts-mode
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 
@@ -107,12 +101,10 @@
 (add-hook 'go-ts-mode-hook 'go//hooks)
 (add-hook 'go-ts-mode-hook #'eglot-ensure)
 
-
 ;; Flycheck
 (add-hook 'go-ts-mode-hook 'flycheck-mode)
 (eval-after-load 'flycheck                                       
   '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
-
 
 ;; Enable folding
 (add-hook 'go-ts-mode-hook #'hs-minor-mode)

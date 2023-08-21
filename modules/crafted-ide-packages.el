@@ -22,5 +22,8 @@
 ;; Packages
 (add-to-list 'package-selected-packages 'protobuf-ts-mode)
 
+;; Glue between flycheck and eglot
+(add-to-list 'package-selected-packages 'flycheck-eglot)
+
 (provide 'crafted-ide-packages)
 ;;; crafted-ide-packages.el ends here

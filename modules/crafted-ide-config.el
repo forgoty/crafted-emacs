@@ -9,11 +9,6 @@
 
 ;; Eglot configuration.
 
-;; Suggested additional keybindings
-;; (with-eval-after-load "prog-mode"
-;;   (keymap-set prog-mode-map "C-c e n" #'flymake-goto-next-error)
-;;   (keymap-set prog-mode-map "C-c e p" #'flymake-goto-prev-error))
-
 ;;; Code:
 
 
@@ -40,9 +35,19 @@ manually with something like this:
             (message (concat "adding eglot to " hook-name))
             (add-hook (intern hook-name) #'eglot-ensure))))))))
 
+;; eglot configuration
+(setq eglot-workspace-configuration
+      '((:gopls .
+                ((buildFlags . ["-tags=unit,integration"])
+                 ))))
+
 ;; add eglot to existing programming modes when eglot is loaded.
 (with-eval-after-load "eglot"
   (crafted-ide--add-eglot-hooks eglot-server-programs))
+
+;; Glue between flycheck and eglot
+(require 'flycheck-eglot)
+(global-flycheck-eglot-mode 1)
 
 ;; Shutdown server when last managed buffer is killed
 (customize-set-variable 'eglot-autoshutdown t)
@@ -51,6 +56,7 @@ manually with something like this:
 (setq treesit-language-source-alist
    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
      (c "https://github.com/tree-sitter/tree-sitter-c")
+     (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
      (cmake "https://github.com/uyha/tree-sitter-cmake")
      (css "https://github.com/tree-sitter/tree-sitter-css")
      (elisp "https://github.com/Wilfred/tree-sitter-elisp")

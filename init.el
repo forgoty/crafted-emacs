@@ -39,6 +39,7 @@
 
 ;; IDE features
 (require 'crafted-golang-packages)
+(require 'crafted-custom-cc-packages)
 (require 'crafted-custom-js-ts-packages)
 
 ;; Install the packages listed in the `package-selected-packages' list.
@@ -63,6 +64,7 @@
 
 ;; IDE features
 (require 'crafted-golang-config)
+(require 'crafted-custom-cc-config)
 
 (unless crafted-startup-inhibit-splash
   (setq initial-buffer-choice #'crafted-startup-screen))

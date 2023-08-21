@@ -15,7 +15,7 @@
   (eglot--progress-reporters args))
 
 (setq project-vc-extra-root-markers
-      '("package.json" "requirements.txt"))
+      '("package.json" "requirements.txt" ".git"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -39,7 +39,7 @@
  '(dired-auto-revert-buffer t)
  '(dired-dwim-target t)
  '(ediff-window-setup-function 'ediff-setup-windows-plain t)
- '(eglot-autoshutdown t t)
+ '(eglot-autoshutdown t)
  '(eshell-scroll-to-bottom-on-input 'this t)
  '(evil-respect-visual-line-mode t)
  '(evil-undo-system 'undo-redo)
@@ -65,7 +65,7 @@
      ("stable" . 70)
      ("melpa" . 0)))
  '(package-selected-packages
-   '(protobuf-ts-mode aggressive-indent plantuml-mode eglot flycheck-golangci-lint magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes ibuffer-project editorconfig helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+   '(flycheck-google-cpplint protobuf-ts-mode aggressive-indent plantuml-mode eglot flycheck-golangci-lint magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes ibuffer-project editorconfig helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
  '(scroll-conservatively 101)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position t)
@@ -77,7 +77,7 @@
  '(tabspaces-remove-to-default t)
  '(tabspaces-use-filtered-buffers-as-default t)
  '(vertico-cycle t)
- '(xref-show-definitions-function 'xref-show-definitions-completing-read t))
+ '(xref-show-definitions-function 'xref-show-definitions-completing-read))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
