@@ -88,11 +88,12 @@ manually with something like this:
 
 ;; enhance ibuffer with ibuffer-project if it is available.
 (when (require 'ibuffer-project nil :noerror)
-  (add-hook 'ibuffer-hook
-            (lambda ()
-              (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
-              (unless (eq ibuffer-sorting-mode 'project-file-relative)
-                (ibuffer-do-sort-by-project-file-relative)))))
+  (defun crafted-ide/enhance-ibuffer-with-ibuffer-project ()
+    "Set up integration for `ibuffer' with `ibuffer-project'."
+    (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
+    (unless (eq ibuffer-sorting-mode 'project-file-relative)
+      (ibuffer-do-sort-by-project-file-relative)))
+  (add-hook 'ibuffer-hook #'crafted-ide/enhance-ibuffer-with-ibuffer-project))
 
 ;; PlantUML
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))

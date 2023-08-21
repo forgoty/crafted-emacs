@@ -38,6 +38,12 @@
 ;; Global defaults
 (require 'eldoc)
 
+;; aggressive-indent-mode for all lisp modes
+(when (locate-library "aggressive-indent")
+  (add-hook 'lisp-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  (add-hook 'scheme-mode-hook #'aggressive-indent-mode))
+
 
 ;;; Common Lisp
 
@@ -51,37 +57,30 @@
   (require 'sly-repl-ansi-color "sly-repl-ansi-color" :no-error)
   (require 'sly-asdf "sly-asdf" :no-error))
 
-(when (featurep 'sly)
+(when (locate-library "sly")
   (add-hook 'lisp-mode-hook #'sly-editing-mode))
-
-(when (featurep 'aggressive-indent-mode)
-  (add-hook 'lisp-mode-hook #'aggressive-indent-mode))
 
 
 ;;; Clojure
 (with-eval-after-load "clojure-mode"
   (require 'cider "cider" :no-error)
   (require 'clj-refactor "clj-refactor" :no-error)
-  (add-hook 'clojure-mode-hook
-            (lambda ()
-              (when (featurep 'clj-refactor)
-                (clj-refactor-mode 1)
-                ;; keybindings mentioned on clj-refactor github page
-                ;; conflict with cider, use this by default as it does
-                ;; not conflict and is a better mnemonic
-                (cljr-add-keybindings-with-prefix "C-c r"))))
+
+  (defun crafted-lisp/load-clojure-refactor ()
+    "Load `clj-refactor' toooling and fix keybinding conflicts with cider."
+    (when (locate-library "clj-refactor")
+      (clj-refactor-mode 1)
+      ;; keybindings mentioned on clj-refactor github page
+      ;; conflict with cider, use this by default as it does
+      ;; not conflict and is a better mnemonic
+      (cljr-add-keybindings-with-prefix "C-c r")))
+  (add-hook 'clojure-mode-hook #'crafted-lisp/load-clojure-refactor)
 
   (with-eval-after-load "flycheck"
     (flycheck-clojure-setup)))
 
-(when (featurep 'aggressive-indent-mode)
-  (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
-
 
 ;;; Scheme and Racket
-(when (featurep 'aggressive-indent-mode)
-  (add-hook 'scheme-mode-hook #'aggressive-indent-mode))
-
 ;; The default is "scheme" which is used by cmuscheme, xscheme and
 ;; chez (at least). We are configuring guile, so use the apporpriate
 ;; command for that implementation.

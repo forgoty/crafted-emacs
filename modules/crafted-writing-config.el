@@ -10,7 +10,7 @@
 ;; Configuration for editing text or writing documents of different
 ;; kinds. Markdown and LaTeX documents are supported, general text
 ;; editing is also supported.  Not configured here are second brain /
-;; zettlekasten systems, those are found in the `crafted-org-config'
+;; Zettelkasten systems, those are found in the `crafted-org-config'
 ;; module.
 
 ;;; Code:
@@ -33,16 +33,16 @@ think.  For example, if you wanted to use spaces instead of tabs
 globally except for in Makefiles, doing the following won't work:
 
 ;; turns on global-whitespace-mode to use spaces instead of tabs
-(crafted-editing-configure-whitespace nil t)
+(crafted-writing-configure-whitespace nil t)
 
 ;; overwrites the above to turn to use tabs instead of spaces,
 ;; does not turn off global-whitespace-mode, adds a hook to
 ;; makefile-mode-hook
-(crafted-editing-configure-whitespace t nil 'makefile-mode)
+(crafted-writing-configure-whitespace t nil 'makefile-mode)
 
 Instead, use a configuration like this:
 ;; turns on global-whitespace-mode to use spaces instead of tabs
-(crafted-editing-configure-whitespace nil t)
+(crafted-writing-configure-whitespace nil t)
 
 ;; turn on the buffer-local mode for using tabs instead of spaces.
 (add-hook 'makefile-mode-hook #'indent-tabs-mode)
@@ -52,27 +52,27 @@ node `(emacs)Just Spaces'
 
 Example usage:
 
-;; Configure whitespace mode, does not turn on whitespace mode
+;; Configuring whitespace mode does not turn on whitespace mode
 ;; since we don't know which modes to turn it on for.
 ;; You will need to do that in your configuration by adding
 ;; whitespace mode to the appropriate mode hooks.
-(crafted-editing-configure-whitespace nil)
+(crafted-writing-configure-whitespace nil)
 
 ;; Configure whitespace mode, but turn it on globally.
-(crafted-editing-configure-whitespace nil t)
+(crafted-writing-configure-whitespace nil t)
 
 ;; Configure whitespace mode and turn it on only for prog-mode
 ;; and derived modes.
-(crafted-editing-configure-whitespace nil nil 'prog-mode)"
+(crafted-writing-configure-whitespace nil nil 'prog-mode)"
   (if use-tabs
-      (customize-save-variable 'whitespace-style
-                               '(face empty trailing indentation::tab
-                                      space-after-tab::tab
-                                      space-before-tab::tab))
+      (customize-set-variable 'whitespace-style
+                              '(face empty trailing indentation::tab
+                                     space-after-tab::tab
+                                     space-before-tab::tab))
     ;; use spaces instead of tabs
-    (customize-save-variable 'whitespace-style
-                             '(face empty trailing tab-mark
-                                    indentation::space)))
+    (customize-set-variable 'whitespace-style
+                            '(face empty trailing tab-mark
+                                   indentation::space)))
 
   (if use-globally
       (global-whitespace-mode 1)
@@ -81,7 +81,7 @@ Example usage:
         (add-hook (intern (format "%s-hook" mode)) #'whitespace-mode))))
 
   ;; cleanup whitespace
-  (customize-save-variable 'whitespace-action '(cleanup auto-cleanup)))
+  (customize-set-variable 'whitespace-action '(cleanup auto-cleanup)))
 
 ;;; parentheses
 (electric-pair-mode 1) ; auto-insert matching bracket
@@ -90,8 +90,8 @@ Example usage:
 
 ;;; LaTeX configuration
 (with-eval-after-load 'latex
-  (customize-save-variable 'TeX-auto-save t)
-  (customize-save-variable 'TeX-parse-self t)
+  (customize-set-variable 'TeX-auto-save t)
+  (customize-set-variable 'TeX-parse-self t)
   (setq-default TeX-master nil)
 
   ;; compile to pdf
@@ -112,9 +112,9 @@ Example usage:
   (add-to-list 'LaTeX-verbatim-macros-with-delims "lstinline")
 
   ;; electric pairs in auctex
-  (customize-save-variable 'TeX-electric-sub-and-superscript t)
-  (customize-save-variable 'LaTeX-electric-left-right-brace t)
-  (customize-save-variable 'TeX-electric-math (cons "$" "$"))
+  (customize-set-variable 'TeX-electric-sub-and-superscript t)
+  (customize-set-variable 'LaTeX-electric-left-right-brace t)
+  (customize-set-variable 'TeX-electric-math (cons "$" "$"))
 
   ;; open all buffers with the math mode and auto-fill mode
   (add-hook 'LaTeX-mode-hook #'auto-fill-mode)
@@ -122,7 +122,7 @@ Example usage:
 
   ;; add support for references
   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  (customize-save-variable 'reftex-plug-into-AUCTeX t)
+  (customize-set-variable 'reftex-plug-into-AUCTeX t)
 
   ;; to have the buffer refresh after compilation
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
@@ -131,20 +131,19 @@ Example usage:
   "Use PDF Tools instead of docview, requires a build environment
 to compile PDF Tools.
 
-Depends on having `pdf-tools' installed.  See
-`crafted-pdf-reader-packages.el' and
-`crafted-pdf-reader-config.el'"
+Depends on having `pdf-tools'."
 
   (with-eval-after-load 'latex
-    (customize-save-variable 'TeX-view-program-selection '((output-pdf "PDF Tools")))
-    (customize-save-variable 'TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
-    (customize-save-variable 'TeX-source-correlate-start-server t)))
+    (customize-set-variable 'TeX-view-program-selection '((output-pdf "PDF Tools")))
+    (customize-set-variable 'TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
+    (customize-set-variable 'TeX-source-correlate-start-server t)))
 
 ;; message the user if the latex executable is not found
-(add-hook 'tex-mode-hook
-          #'(lambda ()
-              (unless (executable-find "latex")
-                (message "latex executable not found"))))
+(defun crafted-writing/tex-warning-if-no-latex-executable ()
+  "Print a message to the minibuffer if the \"latex\" executable cannot be found."
+  (unless (executable-find "latex")
+    (message "latex executable not found")))
+(add-hook 'tex-mode-hook #'crafted-writing/tex-warning-if-no-latex-executable)
 
 (when (and (executable-find "latex")
            (executable-find "latexmk"))
@@ -152,8 +151,12 @@ Depends on having `pdf-tools' installed.  See
     (when (require 'auctex-latexmk nil 'noerror)
       (with-eval-after-load 'auctex-latexmk
         (auctex-latexmk-setup)
-        (customize-save-variable 'auctex-latexmk-inherit-TeX-PDF-mode t))
-      (add-hook 'TeX-mode-hook #'(lambda () (setq TeX-command-default "LatexMk"))))))
+        (customize-set-variable 'auctex-latexmk-inherit-TeX-PDF-mode t))
+
+      (defun crafted-writing/tex-make-latexmk-default-command ()
+        "Set `TeX-command-default' to \"LatexMk\"."
+        (setq TeX-command-default "LatexMk"))
+      (add-hook 'TeX-mode-hook #'crafted-writing/tex-make-latexmk-default-command))))
 
 
 ;;; Markdown
@@ -170,19 +173,21 @@ Depends on having `pdf-tools' installed.  See
     (message "No markdown processor found, preview may not possible."))
 
   (with-eval-after-load 'markdown-mode
-    (customize-save-variable 'markdown-enable-math t)
-    (customize-save-variable 'markdown-enable-html t)
+    (customize-set-variable 'markdown-enable-math t)
+    (customize-set-variable 'markdown-enable-html t)
     (add-hook 'markdown-mode-hook #'conditionally-turn-on-pandoc)))
 
 
 ;;; PDF Support when using pdf-tools
-(when (featurep 'pdf-tools)
-  (add-hook 'doc-view-mode-hook
-            (lambda ()
-              (require 'pdf-tools nil :noerror)))
+(when (locate-library "pdf-tools")
+  ;; load pdf-tools when going into doc-view-mode 
+  (defun crafted-writing/load-pdf-tools ()
+    "Attempts to require pdf-tools, but for attaching to hooks."
+    (require 'pdf-tools nil :noerror))
+  (add-hook 'doc-view-mode-hook #'crafted-writing/load-pdf-tools)
 
+  ;; when pdf-tools is loaded, apply settings.
   (with-eval-after-load 'pdf-tools
-    (pdf-tools-install)
     (setq-default pdf-view-display-size 'fit-width)))
 
 (provide 'crafted-writing-config)
