@@ -57,6 +57,7 @@
 (require 'crafted-ui-config)
 (require 'crafted-ide-config)
 (require 'crafted-workspaces-config)
+(require 'crafted-completion-config)
 (require 'crafted-custom-completion-config)
 (require 'crafted-custom-themes-config)
 (require 'crafted-custom-tools-config)
