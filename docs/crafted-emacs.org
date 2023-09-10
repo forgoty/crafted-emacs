@@ -275,6 +275,8 @@ for the code examples.
   using the same package installation methods as Crafted Emacs.
 
   #+include: crafted-completion.org
+  #+include: crafted-defaults.org
+  #+include: crafted-evil.org
   #+include: crafted-ide.org
   #+include: crafted-lisp.org
   #+include: crafted-org.org

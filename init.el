@@ -83,3 +83,5 @@
 
 ;; Set default coding system (especially for Windows)
 (set-default-coding-systems 'utf-8)
+(put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
