@@ -23,7 +23,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(Man-notify-method 'aggressive t)
- '(bookmark-save-flag 1 t)
+ '(bookmark-save-flag 1)
  '(completion-category-overrides '((file (styles partial-completion))))
  '(completion-cycle-threshold 3)
  '(completion-styles '(orderless basic))

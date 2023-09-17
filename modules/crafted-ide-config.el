@@ -31,8 +31,8 @@ manually with something like this:
                    (not (eq 'lisp-mode mode))     ; prefer sly/slime
                    (not (eq 'scheme-mode mode))   ; prefer geiser
                    )
-          (let ((hook-name (concat (symbol-name mode) "-hook")))
-            (message (concat "adding eglot to " hook-name))
+          (let ((hook-name (format "%s-hook" (symbol-name mode))))
+            (message "adding eglot to %s" hook-name)
             (add-hook (intern hook-name) #'eglot-ensure))))))))
 
 ;; eglot configuration
@@ -88,12 +88,12 @@ manually with something like this:
 
 ;; enhance ibuffer with ibuffer-project if it is available.
 (when (require 'ibuffer-project nil :noerror)
-  (defun crafted-ide/enhance-ibuffer-with-ibuffer-project ()
+  (defun crafted-ide-enhance-ibuffer-with-ibuffer-project ()
     "Set up integration for `ibuffer' with `ibuffer-project'."
     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
     (unless (eq ibuffer-sorting-mode 'project-file-relative)
       (ibuffer-do-sort-by-project-file-relative)))
-  (add-hook 'ibuffer-hook #'crafted-ide/enhance-ibuffer-with-ibuffer-project))
+  (add-hook 'ibuffer-hook #'crafted-ide-enhance-ibuffer-with-ibuffer-project))
 
 ;; PlantUML
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
