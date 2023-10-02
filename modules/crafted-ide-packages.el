@@ -1,6 +1,6 @@
 ;; crafted-ide-packages.el -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022
+;; Copyright (C) 2023
 ;; SPDX-License-Identifier: MIT
 
 ;; Author: System Crafters Community
