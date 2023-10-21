@@ -1,133 +1,121 @@
 * Crafted Emacs Lisp Module
 
-  This module installs and configures a few additonal packages to
-  provide a configuration for the Lisp family of languages including
-  Common Lisp, Clojure, Scheme, and Racket.
+** Installation
 
-  - Prerequisites:
+To use this module, simply require them in your =init.el= at the appropriate
+points.
 
-    Obviously, an implementation of one of the languages mentioned
-    above would need to be installed. Examples would be (a
-    non-exhaustive list):
+#+begin_src emacs-lisp
+;; add crafted-lisp package definitions to selected packages list
+(require 'crafted-lisp-packages)
 
-    + Common Lisp:
-      * CLISP (GNU Common Lisp) [[https://clisp.sourceforge.io]]
+;; install the packages
+(package-install-selected-packages :noconfirm)
 
-        GNU's implementation, cross platform, a good choice for people
-        who need to target Microsoft Windows, Mac OS, and/or Linux.
+;; Load crafted-lisp configuration
+(require 'crafted-lisp-config)
+#+end_src
 
-      * CMUCL (Carnegie-Mellon Common Lisp) [[https://cmucl.org]]
+** Description
+The ~crafted-lisp~ module provides packages and configuration for development
+using various Lisp and Scheme variants.
 
-        An implementation from Carnegie-Mellon university. Known to be
-        fairly fast with a native compiler. Runs on most Unix
-        platforms.
+- ~aggressive-indent-mode~ for all Lisp/Scheme modes
 
-      * SBCL (Steel-Bank Common Lisp) [[http://sbcl.org]]
+  ~aggressive-indent~ automatically indents code, even while editing or moving
+  code around. ~aggressive-indent-mode~ is added to ~lisp-mode-hook~,
+  ~scheme-mode-hook~ and ~clojure-mode-hook~.
 
-        A fork of CMUCL and ostensibly the most popular
-        implementation, though there aren't many user visible
-        differences between SBCL and CMUCL.
+*** Common Lisp
 
-    + Clojure [[https://clojure.org]]
+  The configuration for Common Lisp features Sylvester the cat’s Common Lisp IDE
+  for Emacs (~sly~). The ~sly-editing-mode~ is added to the ~lisp-mode-hook~.
 
-    + Scheme:
-      * GNU Guile [[https://www.gnu.org/software/guile]]
+  Sly provides a debugger, inspector, xref, completion, integration with
+  ASDF (~sly-asdf~) and Quicklisp (~sly-quicklisp~) system definition tools.
+  For ansi-color in the REPL, the package ~sly-repl-ansi-color~ is added.
 
-        The GNU Ubiquitious Intelligent Language for Extensions, can
-        be combined with C/C++ programs as an extension language or
-        can be used stand-alone and features a compiler and vitual
-        machine. Popularly used with the GNU Guix package manager used
-        natively by the GNU Guix Linux distribution, although it can
-        be used with other Linux distributions as well.
+  The sly extension packages (~sly-*~) are loaded once the main ~sly~ package
+  is loaded.
 
-      * Chez [[https://cisco.github.io/ChezScheme]]
+  To set the Common Lisp implementation, customize the ~inferior-lisp-program~,
+  for example:
 
-        Known to be extremely fast, with a native compiler providing
-        binaries on par with compiled C code.
+  #+begin_src emacs-lisp
+  ;; SBCL
+  (customize-set-variable 'inferior-lisp-program "/usr/bin/sbcl")
 
-      * Gauche [[https://practical-scheme.net/gauche]]
+  ;; Using roswell
+  (customize-set-variable 'inferior-lisp-program "/usr/bin/ros run")
+  #+end_src
 
-        Built to start start nearly instantly, targeted as a shell
-        scripting tool.
+*** Clojure
 
-    + Racket [[https://racket-lang.org]]
+- Package: ~cider~
 
-      Promoted as a language for language developers, is cross
-      platform with a few pedagogical books to help beginners learn to
-      write software, as well as many advanced features.
+  Cider provides the REPL interface for Clojure in Emacs.
 
-** Packages Installed
+- Package: ~clj-refactor~
 
-   - Common
-     + =aggressive-indent=
-   - Common Lisp
-     + =sly=
-     + =sly-asdf=
-     + =sly-quicklisp=
-     + =sly-repl-ansi-color=
-   - Clojure
-     + =cider=
-     + =clj-refactor=
-     + =clojure-mode=
-     + =flycheck-clojure=
-   - Scheme/Racket
-     + =geiser=
-     + =geiser-guile=
-     + =geiser-racket=
+  Additional refactoring layer built on-top of cider.
 
-** Common
+  The refactoring keybindings are conflicting with cider by default.
+  Crafted Emacs sets the bindings to =C-c r= by default to avoid this
+  conflict.
 
-   Aggressive indent mode is added to each of the other lisp family
-   configurations. It provides automatic indentation, even when
-   pasting code or adding structure. It is added on each mode hook, to
-   turn this feature off, remove the hook. For example:
+- Package: ~clojure-mode~
 
-   #+begin_src emacs-lisp
-     (remove-hook 'lisp-mode-hook #'aggressive-indent-mode)
-   #+end_src
+  Major mode for Clojure providing syntax highlighting, indentation
+  and more.
 
-   - Hooks =aggressive-mode= is added to:
-     - =lisp-mode-hook=
-     - =scheme-mode-hook=
-     - =clojure-mode-hook=
+- Package: ~flycheck-clojure~
 
-** Common Lisp
+  Flycheck integration for Clojure linters.
 
-   The configuration for Common Lisp features Sylvester the cat's
-   Common Lisp IDE for Emacs. It provides a debugger, inspector, xref,
-   completion, integration with ASDF and Quicklsp system definition
-   tools.
+*** Scheme and Racket
 
-** Clojure
+The Scheme and Racket configuration is entirely based around ~geiser~.
 
-   The configuration for Clojure is based on CIDER and adds
-   =clj-refactor= a refactoring layer built on top of CIDER. The
-   refactoring keybinding prefix is set to =C-c r= to avoid conflicts
-   with CIDER. To change this to something else (for example =C-c C-m=
-   as mentioned on the github page) use the following snippet:
+Geiser provides a modular package for the Scheme family of languages
+including Racket. There are several modules availble for Geiser.
+When visiting a scheme file, use =M-x run-geiser= to start a REPL.
 
-   #+begin_src emacs-lisp
-     (cljr-add-keybindings-with-prefix "C-c C-m")
-   #+end_src
+If you have installed multiple scheme implementations, you may wish
+to customize the ~scheme-program-name~ variable.
 
-** Scheme/Racket
+#+begin_src emacs-lisp
+;; Default to guile (already in crafted-lisp-config.el)
+(customize-set-variable 'scheme-program-name "guile")
+#+end_src
 
-   Geiser provides a modular package for the Scheme family of
-   languages including Racket. There are several modules availble for
-   Geiser. We provide the configuration for Guile and Racket, but
-   others can be added, see the Commentary section for this module to
-   see a list of other modules, or look for them by running
-   =M-x list-packages= and seaching for =geiser=.
+** Additional packages: ~geiser-*~
 
-   When visiting a scheme file, use =M-x gieser-run= to start a
-   REPL. Alternatively, you can use =M-x geiser-guile= or
-   =M-x geiser-racket-connect=.
+Crafted Emacs pre-installs the geiser interface packages for guile and racket.
+Additional geiser packages are usually named in the form of
+~geiser-<implementation>~, for example:
 
-   If you have installed multiple scheme implementations, you may wish
-   to set the =scheme-program-name= variable, which we default to
-   "guile" to match the configuration for that implementation. To
-   change this to =scheme= for example, use this snippet:
+- ~geiser-chez~ for Chez Scheme
+- ~geiser-chibi~ for Chibi Scheme
+- ~geiser-chicken~ for Chicken Scheme
+- ~geiser-gambit~ for Gambit Scheme
+- ~geiser-gauche~ for Gauche Scheme
+- ~geiser-kawa~ for GNU Kawa
+- ~geiser-mit~ for MIT/GNU Scheme
+- ~stklos~ for STklos
 
-   #+begin_src emacs-lisp
-     (customize-set-variable 'scheme-program-name "scheme")
-   #+end_src
+All of these packages can be installed by adding them to the
+~package-selected-packages~ list before installing all selected packages:
+
+#+begin_src emacs-lisp
+;; Add support for MIT/GNU Scheme
+(add-to-list 'package-selected-packages 'geiser-mit)
+
+;; install the packages
+(package-install-selected-packages :noconfirm)
+#+end_src
+
+-----
+# Local Variables:
+# fill-column: 80
+# eval: (auto-fill-mode 1)
+# End:

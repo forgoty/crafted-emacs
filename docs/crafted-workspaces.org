@@ -1,22 +1,47 @@
-* Crafted Workspaces Module
+* Crafted Emacs Workspaces Module
 
-This module installs and sets a basic configuration for [[https://github.com/mclear-tools/tabspaces][tabspaces.el]].
+** Installation
 
-** Provided configuration
+To use this module, simply require them in your =init.el= at the appropriate
+points.
 
-=tabspaces-use-filtered-buffers-as-default= is enabled.  This setting
-remaps =switch-to-buffer= with =tabspaces-switch-to-buffer=, which uses a
-filtered list of buffers in the completion list.
+#+begin_src emacs-lisp
+;; add crafted-workspaces package definitions to selected packages list
+(require 'crafted-workspaces-packages)
 
-=tabspaces-remove-to-default= is enabled.  Buffers removed from a
-tabspace are moved to the default tabspace.
+;; install the packages
+(package-install-selected-packages :noconfirm)
 
-=tabspaces-include-buffers= adds the =*scratch*= buffer to all tabspaces.
+;; Load crafted-workspaces configuration
+(require 'crafted-workspaces-config)
+#+end_src
 
-** Workarounds
+** Description
 
-=project--ensure-read-project-list= is called to initialize the project
-list; this avoids an error where the dispatch menu causes an error
-when =tabspaces-switch-or-create-workspace= is called.  Users can still
-select a file or directory when creating the workspace, and the
-dispatch still works within the workspace.
+The ~crafted-workspaces~ module installs and sets up the [[https://github.com/mclear-tools/tabspaces][tabspaces]] package
+to provide workspaces (think of them like tabs in a web browser) for Emacs.
+
+To open new workspaces, run =M-x tabspaces-switch-or-create-workspace=.
+
+This module sets it up so that when changing buffers, you don't see the
+whole list of currently opened buffers, but only those that belong to the
+current workspace.
+
+Adding a buffer to a workspace is simple: just open it in that workspaces.
+To remove a buffer from a workspace (but leave it open for other workspaces),
+look at the commands ~tabspaces-remove-selected-buffer~ and
+~tabspaces-remove-current-buffer~. 
+
+To set up bindings for commands like that, have a look at [[https://github.com/mclear-tools/tabspaces#keybindings][keybindings]] 
+suggested by the package author.
+
+When you remove a buffer from all opened workspaces, it will still be open
+and available from your default workspace. You can modify that behaviour by
+setting the custom variable ~tabspaces-remove-to-default~ to nil.
+
+By default the =*scratch*= buffer is accessible from all workspaces. You can
+modify which buffers are included by default by changing the value of
+~tabspaces-include-buffers~.
+
+See the documentation of the tabspaces package for details and to explore
+further options and settings.

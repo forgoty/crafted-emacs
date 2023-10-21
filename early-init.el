@@ -1,126 +1,104 @@
-;;; early-init.el -*- lexical-binding: t; -*-
-
-;;; Garbage collection
-;; Increase the GC threshold for faster startup
-;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
-
-;;; Emacs lisp source/compiled preference
-;; Prefer loading newest compiled .el file
-(customize-set-variable 'load-prefer-newer t)
-
-;;; Crafted Config Path
+;;; early-init.el --- Emacs early initialization for Crafted Emacs (optional) -*- lexical-binding: t; -*-
+;;; Commentary:
 ;;
-;; Find the user configuration path. This needs to be done very early
-;; so later configuration can make use of this variable.
-;;
-;; In order do these checks:
-;; * using chemacs?
-;; ** yes, and have specified a location with the CRAFTED_EMACS_HOME
-;;    environment variable
-;; ** yes, but no environment variable, assume the crafted-emacs
-;;    folder in the profile
-;; * use CRAFTED_EMACS_HOME environment variable
-;; * XDG_CONFIG_HOME or the path .config/crafted-emacs
-;;   exists. XDG_CONFIG_HOME usually defaults to $HOME/.config/, so
-;;   these are the same thing
-;; * use HOME environment variable
-(defvar crafted-config-path
-  (cond
-   ((featurep 'chemacs)
-    (if (getenv  "CRAFTED_EMACS_HOME")
-        (expand-file-name (getenv "CRAFTED_EMACS_HOME"))
-      (expand-file-name "crafted-emacs" user-emacs-directory)))
-   ((getenv "CRAFTED_EMACS_HOME") (expand-file-name (getenv "CRAFTED_EMACS_HOME")))
-   ((or (getenv "XDG_CONFIG_HOME") (file-exists-p (expand-file-name ".config/crafted-emacs" (getenv "HOME"))))
-    (if (getenv "XDG_CONFIG_HOME")
-        (expand-file-name "crafted-emacs" (getenv "XDG_CONFIG_HOME"))
-      (expand-file-name ".config/crafted-emacs" (getenv "HOME"))))
-   ((getenv "HOME") (expand-file-name ".crafted-emacs" (getenv "HOME"))))
-  "The user's crafted-emacs configuration path.")
+;;; Code:
 
-;;; Load Path
-;; make sure the crafted-config-path is on the load path so the user
-;; can load "custom.el" from there if desired.
-(add-to-list 'load-path (expand-file-name crafted-config-path))
+;; Configures `package.el'
+(load "~/.config/crafted-emacs/modules/crafted-early-init-config")
 
-(unless (file-exists-p crafted-config-path)
-  (mkdir crafted-config-path t))
+;; Defer garbage collection further back in the startup process
+(let ((old-threshold gc-cons-threshold))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq gc-cons-threshold old-threshold)))
+  (setq gc-cons-threshold most-positive-fixnum))
 
-;;; Native compilation settings
-(when (featurep 'native-compile)
-  ;; Silence compiler warnings as they can be pretty disruptive
-  (setq native-comp-async-report-warnings-errors nil)
+;; Silence compiler warnings as they can be pretty disruptive
+(setq comp-async-report-warnings-errors nil)
 
-  ;; Make native compilation happens asynchronously
-  (setq native-comp-deferred-compilation t)
-
-  ;; Set the right directory to store the native compilation cache
-  ;; NOTE the method for setting the eln-cache directory depends on the emacs version
-  (when (fboundp 'startup-redirect-eln-cache)
-    (if (version< emacs-version "29")
-        (add-to-list 'native-comp-eln-load-path (convert-standard-filename (expand-file-name "var/eln-cache/" user-emacs-directory)))
-      (startup-redirect-eln-cache (convert-standard-filename (expand-file-name "var/eln-cache/" user-emacs-directory)))))
-
-  (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)))
-
-;;; UI configuration
-;; Remove some unneeded UI elements (the user can turn back on anything they wish)
-(setq inhibit-startup-message t)
-(push '(tool-bar-lines . 0) default-frame-alist)
+;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
-(push '(mouse-color . "white") default-frame-alist)
 
-;; Loads a nice blue theme, avoids the white screen flash on startup.
-(load-theme 'deeper-blue t)
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we easily halve startup times with fonts that are
+;; larger than the system default.
+(setq frame-inhibit-implied-resize t)
 
-;; Make the initial buffer load faster by setting its mode to fundamental-mode
-(customize-set-variable 'initial-major-mode 'fundamental-mode)
+;; Disable GUI elements
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(tooltip-mode -1)
+(set-fringe-mode 10)
+(setq inhibit-startup-screen t )
+(setq inhibit-startup-message t)
+(setq inhibit-splash-screen t)
+(setq use-file-dialog nil)
+(setq use-dialog-box nil)
 
-(defun crafted-using-guix-emacs-p ()
-  "Verifies if the running emacs executable is under the `/gnu/store/' path."
-  (unless (or (equal system-type 'ms-dos)
-              (equal system-type 'windows-nt))
-    ;; Since there is no windows implementation of guix
-    (string-prefix-p "/gnu/store/"
-                     (file-truename
-                      (executable-find
-                       (car command-line-args))))))
+;; Cursor
+(blink-cursor-mode 0)
 
-(defvar crafted-prefer-guix-packages (crafted-using-guix-emacs-p)
-  "If t, expect packages to be installed via Guix by default.")
+;; Prevent unwanted runtime builds in gccemacs (native-comp); packages are
+;; compiled ahead-of-time when they are installed and site files are compiled
+;; when gccemacs is installed.
+(setq comp-deferred-compilation nil)
 
-(defvar crafted-load-custom-file t
-  "When non-nil, load `custom.el' after `config.el'.
+;;; Line Numbers
+;; Uncomment to see line numbers
+; (setq display-line-numbers-type 'relative)
+; (global-display-line-numbers-mode 1)
 
-The custom file is found in the `crafted-config-path'. It
-contains customizations of variables and faces that are made by
-the user through the Customization UI, as well as any
-customizations made by packages.")
+;; View line/columen position in modeline
+(setq column-number-mode t)
+(setq line-number-mode t)
 
-;;; Package system
-;; Load the package-system.  If needed, the user could customize the
-;; system to use in `early-config.el'.
-(defvar crafted-bootstrap-directory (expand-file-name "bootstrap/" user-emacs-directory)
-  "Package system bootstrap configuration.")
+;; sentence SHOULD end with only a point.
+(setq sentence-end-double-space nil)
+;; toggle wrapping text at the 80th character
+(setq default-fill-column 80)
 
-(load (expand-file-name "crafted-package.el" crafted-bootstrap-directory))
-(when (eq crafted-package-system 'package)
-  ;; needed in case `early-config.el' has pinned packages configured
-  (require 'package))
+;; Set up the visible bell
+(setq visible-bell t)
+;; silent bell when you make a mistake
+(setq ring-bell-function 'ignore )
 
-;;; Load the early config file if it exists, must be run before the
-;;; package configuration below to allow the user to change packaging
-;;; system to `straight' (or other supported packaging system) or to
-;;; configure how often the package archives are updated when Emacs is
-;;; starting.
-(let ((early-config-path (expand-file-name "early-config.el" crafted-config-path)))
-  (when (file-exists-p early-config-path)
-    (load early-config-path nil 'nomessage)))
+;; Delete excess backup versions
+(setq delete-old-versions -1 )
 
-;; this is the default
-;; (setq crafted-package-system 'package)
-;; use this in `early-config.el' to switch to `straight.el'
-;; (setq crafted-package-system 'straight)
-(crafted-package-bootstrap crafted-package-system)
+;; Don't warn for large files (shows up when launching videos)
+(setq large-file-warning-threshold nil)
+
+;; Use version control
+(setq version-control t )
+;;Don't warn for following symlinked files
+(setq vc-follow-symlinks t)
+;; make backups file even when in version controlled dir
+(setq vc-make-backup-files t )
+;; which directory to put backups file
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")) )
+;;transform backups file name
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) )
+
+;;Don't warn when advice is added for functions
+(setq ad-redefinition-action 'accept)
+
+;; Set font
+(set-face-attribute 'default nil :font "Hack" :height 120)
+
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;;; Tab Widths
+;; Default to an indentation size of 2 spaces since it's the norm for pretty much every language I use.
+(setq-default tab-width 2)
+(setq-default evil-shift-width tab-width)
+
+;; Use spaces instead of tabs for indentation
+(setq-default indent-tabs-mode nil)
+
+(provide 'early-init)
+
+;;; early-init.el ends here

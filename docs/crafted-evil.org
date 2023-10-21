@@ -2,61 +2,128 @@
 
 ** Installation
 
-To use this module, simply require it in your config.
+To use this module, simply require them in your =init.el= at the appropriate
+points.
 
 #+begin_src emacs-lisp
-(require 'crafted-evil)
+;; add crafted-evil package definitions to selected packages list
+(require 'crafted-evil-packages)
+
+;; install the packages
+(package-install-selected-packages :noconfirm)
+
+;; Load crafted-evil configuration
+(require 'crafted-evil-config)
 #+end_src
-                                                 
+
 ** Description
 
-This module installs and sets up four packages to emulate and extend [[https://www.vim.org/][Vim's]] modal editing model.
+~evil-mode~ implements modal editing in the style of =vim= in Emacs.
+The ~crafted-evil~ module adds ~evil-mode~ alongside configuration to enhance
+the experience.
 
-+ [[https://github.com/emacs-evil/evil][Evil]]: A minor mode that adds Vim-like modal editing, visual selection, and text objects to Emacs
-+ [[https://github.com/emacs-evil/evil-collection][Evil-collection]]:  Vim-like bindings for modes not covered by default in Evil
-+ [[https://elpa.gnu.org/packages/undo-tree.html#:~:text=The%20%60undo%2Dtree%2Dmode,of%20never%20losing%20any%20history][Undo-tree]]: Visualizes changes made in your file as a tree
-+ [[https://github.com/redguardtoo/evil-nerd-commenter][Evil-nerd-commenter]]: Allows easy commenting of code for many different file types.
+- Package: ~evil~
 
-More information can be found about each of these packages on their respective pages linked above.
+  Introduces the ~evil-mode~ minor mode that adds vim-like modal editing,
+  visual selection and text objects to Emacs.
 
-If this module is included in your configuration file, evil-mode, along with evil-collection and evil-nerd-commenter will be enabled by default. To toggle evil-mode on or off run =M-x evil-mode=.
+- Package: ~evil-collection~
 
-The undo history of a file can be visualized using =M-x undo-tree-visualize= which is bound by default to =C-x u=. The history can then be navigated through using the arrow keys.
+  vim-like bindings for modes not covered by the ~evil~ package.
+  Automatically initialized for all common modes
+  (see ~evil-collection-mode-list~).
 
-** Customization Variables
+- Package: ~evil-nerd-commenter~
 
-This module provides two customizable variables
+  Allow easy commenting of code for many different file types.
+  Is enabled with the default keybindings.
 
-+ =crafted-evil-discourage-arrow-keys=
-+ =crafted-evil-vim-muscle-memory=.
+- Package: ~undo-tree~
 
-When =crafted-evil-discourage-arrow-keys= is true, arrow keys are disabled in normal and visual mode. When you attempt to use the arrow keys a message will pop up reminding you to use the =HJKL= keys instead.
+  This package is only installed for Emacs 28 or older. With Emacs 29 onwards,
+  ~undo-redo~ is used instead. Both systems provide vim-like undo functionality
+  and are selected for ~evil-undo-system~ depending on the version of Emacs.
 
-When =crafted-evil-vim-muscle-memory= is true, the variables =evil-want-C-i-jump=, =evil-want-Y-yank-to-eol=, and =evil-want-fine-undo= are all set to true. By default, they are nil. Setting these to true allows Evil to overwrite some of the default Emacs keybindings to allow for a more Vim-like experience.
 
-Setting =evil-want-C-i-jump= to true sets =C-i= to jump forward, as in Vim. The default behavior is to insert a tab character.
+- ~evil-want-integration~: =t=
 
-When =evil-want-Y-yank-to-eol= is true =Y= yanks to the end of the line. The default behavior if to yank the whole line.
+  Load the ~evil-integration.el~ file from evil-mode.
+  Provides additional integration for various Emacs modes.
 
-Finally, setting =evil-want-fine-undo= to true allows an action, such as an insert, to be broken into separate steps. For example, if, while in the insert state, you performed a delete operation after a change operation setting this variable to true would allow it to be undone in multiple steps. If it is set to nil then an action, like the one described above, will be undone all at once. 
+- ~evil-want-keybinding~: =nil=
 
-Each package this module installs might have additional variables that can be modified to change its behavior. Please refer to the documentation for those packages for more information.
+  Disable keybinding integration, as it's covered by ~evil-collection~.
 
-** Some default settings
+- ~evil-want-C-i-jump~: =nil=
 
-For your convenience, the following settings have been set by default.
+  Disable vim's =C-i= jump.
 
-+ =evil-respect-visual-line-mode= is set to t, causing Evil's motion commands to act on visual lines rather than logical lines.
-+ The following modes are set to open up in Emacs state (using Emacs' default keybindings) when they start
-  + custom-mode
-  + eshell-mode
-  + term-mode
-+ The following keybindings have been added
+- ~evil-respect-visual-line-mode~: =t=
 
-  | Key-Chord | Function                             | Keymap                  |
-  |-----------+--------------------------------------+-------------------------|
-  | =C-g=     | =evil-normal-state=                  | =evil-insert-state-map= |
-  | =C-M-u=   | =universal-argument=                 | =current-global-map=    |
-  | =C-h=     | =evil-delete-backward-char-and-join= | =evil-insert-state-map= |
-  | =j=       | =evil-next-visual-line=              | =evil-motion-state-map= |
-  | =k=       | =evil-previous-visual-line=          | =evil-motion-state-map= |
+  Respect visual-line-mode when moving around with vim movements.
+
+- ~evil-want-C-h-delete~: =t=
+
+  Enable a more ergonomic delete with =C-h= rather than having to reach for
+  the backspace key.
+
+- ~evil-search-module~: =evil-search=
+
+  Make the evil search more like vim.
+
+- new binding: =C-g= \rightarrow ~evil-normal-state~
+
+  Make =C-g= revert to normal state.
+
+- new binding: =C-M-u= \rightarrow ~universal-argument~
+
+  Rebind universal-argument to =C-M-u= since =C-u= is a vim binding to scroll the
+  buffer.
+
+- new evil bindings: ~evil-*-visual-line~
+
+  Changes motion binds of =j= and =k= to use the ~visual-line~ functions, even when
+  outside ~visual-line-mode~ buffers.
+
+- new function: ~crafted-evil-vim-muscle-memory~
+
+  Enable some of the default keybindings for evil mode to make the
+  experience more like vim (C-i jump, Y-yank-to-eol, fine-undo).
+  This function can be called after loading the configuration.
+
+- new function: ~crafted-evil-discourage-arrow-keys~
+
+  Replace arrow key functionality with a message to discourage use of
+  arrow keys (and use "hjkl" instead).
+  This function can be called after loading the configuration.
+
+- ~evil-emacs-state-modes~
+
+  Some modes tend to not play nice with evil.
+  These modes can be added to the ~evil-emacs-state-modes~ list for which
+  ~evil-mode~ will be falling back to Emacs-style keybindings and functionality.
+
+  ~crafted-evil~ adds ~custom-mode~, ~eshell-mode~ and ~term-mode~.
+
+- ~vertico~ - keybindings
+
+  If ~vertico~ is installed and loaded, (e.g. by ~crafted-completion-config~),
+  evil bindings for it are proably handled by ~evil-collection~ (see above). If
+  the latter is /not/ installed, this module provides three keybindings:
+
+  | =C-j= | ~vertico-next~         |
+  | =C-k= | ~vertico-previous~     |
+  | =M-h= | ~vertico-directory-up~ |
+
+  To change this, add code like this to you config, replacing =C-j= with the
+  desired keybinding:
+
+  #+begin_src emacs-lisp
+    (keymap-set vertico-map "C-j" 'vertico-next)
+  #+end_src
+  
+-----
+# Local Variables:
+# fill-column: 80
+# eval: (auto-fill-mode 1)
+# End:
