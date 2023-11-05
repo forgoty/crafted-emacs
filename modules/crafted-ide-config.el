@@ -39,6 +39,7 @@ manually with something like this:
 (setq eglot-workspace-configuration
       '((:gopls .
                 ((buildFlags . ["-tags=unit,integration"])
+                 (gofumpt . t)
                  ))))
 
 ;; add eglot to existing programming modes when eglot is loaded.
