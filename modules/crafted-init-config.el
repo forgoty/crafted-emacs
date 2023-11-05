@@ -144,9 +144,24 @@ explicitly."))
     (info-initialize)
     (push (file-name-directory crafted-info-dir) Info-directory-list)))
 
+(defun crafted-save-customized ()
+  "Save and reload the customizations made during Emacs initialization.
+
+Due to the way Emacs Customization works - or seems to - and this
+bug: https://debbugs.gnu.org/cgi/bugreport.cgi?bug=21355, we need
+to save all customizations made during Emacs startup and then
+reload the custom-file.  This sets (or should set) all customized
+values to the \"SET and saved.\" state and (hopefully) avoid the
+bug above.  If the user never set a value for `custom-file' then
+we can't reload the file."
+  (customize-save-customized)
+  ;; only load the `custom-file' if it is not `nil'. 
+  (unless custom-file
+    (load custom-file :noerror)))
+
 ;; Save all customizations to `custom-file', unless the user opted out.
 (when crafted-init-auto-save-customized
-  (add-hook 'after-init-hook #'customize-save-customized))
+  (add-hook 'after-init-hook #'crafted-save-customized))
 (when crafted-init-auto-save-selected-packages
   (add-hook 'after-init-hook #'package--save-selected-packages))
 
