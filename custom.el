@@ -22,7 +22,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(LaTeX-electric-left-right-brace t)
  '(Man-notify-method 'aggressive t)
+ '(TeX-auto-save t)
+ '(TeX-electric-math '("$" . "$"))
+ '(TeX-electric-sub-and-superscript t)
+ '(TeX-parse-self t)
  '(bookmark-save-flag 1)
  '(completion-category-overrides '((file (styles partial-completion))))
  '(completion-cycle-threshold 3)
@@ -66,7 +71,8 @@
      ("stable" . 70)
      ("melpa" . 0)))
  '(package-selected-packages
-   '(evil-textobj-tree-sitter flycheck-eglot flycheck-google-cpplint protobuf-ts-mode aggressive-indent plantuml-mode eglot flycheck-golangci-lint magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes ibuffer-project editorconfig helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+   '(auctex pandoc-mode markdown-mode evil-textobj-tree-sitter flycheck-eglot flycheck-google-cpplint protobuf-ts-mode aggressive-indent plantuml-mode eglot flycheck-golangci-lint magit restart-emacs popwin flycheck-pos-tip flycheck rg winum which-key general evil-iedit-state evil-visualstar evil-surround evil-embrace evil-nerd-commentary doom-modeline doom-themes ibuffer-project editorconfig helpful elisp-demos all-the-icons org-roam org-appear denote evil-anzu evil-nerd-commenter evil-collection evil vertico-directory vertico orderless marginalia embark-consult embark corfu-terminal corfu consult cape))
+ '(reftex-plug-into-AUCTeX t t)
  '(scroll-conservatively 101)
  '(scroll-margin 0)
  '(scroll-preserve-screen-position t)

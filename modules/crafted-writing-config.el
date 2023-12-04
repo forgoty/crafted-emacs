@@ -158,7 +158,7 @@ Depends on having `pdf-tools'."
         (setq TeX-command-default "LatexMk"))
       (add-hook 'TeX-mode-hook #'crafted-writing-tex-make-latexmk-default-command))))
 
-
+
 ;;; Markdown
 (when (fboundp 'markdown-mode)
   ;; because the markdown-command variable may not be loaded (yet),
@@ -177,7 +177,13 @@ Depends on having `pdf-tools'."
     (customize-set-variable 'markdown-enable-html t)
     (add-hook 'markdown-mode-hook #'conditionally-turn-on-pandoc)))
 
-
+;;; RST
+(when (fboundp 'rst-mode)
+  (with-eval-after-load 'rst-mode
+    (setq ispell-program-name "aspell")
+    (setq ispell-dictionary "en_US")
+    (add-hook 'rst-mode 'flyspell-mode)))
+
 ;;; PDF Support when using pdf-tools
 (when (locate-library "pdf-tools")
   ;; load pdf-tools when going into doc-view-mode
