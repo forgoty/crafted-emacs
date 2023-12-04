@@ -55,7 +55,7 @@ See URL `http://cppcheck.sourceforge.net/'."
 
 ;; Default language server is ccls for c-ts-mode
 (with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(c-ts-mode . ("ccls"))))
-
+    (add-to-list 'eglot-server-programs '((c-ts-mode c++-ts-mode) "ccls"
+ 					  "-init={\"compilationDatabaseDirectory\":\"build\"}")))
 (provide 'crafted-custom-cc-config)
 ;;; crafted-custom-cc-config.el ends here
