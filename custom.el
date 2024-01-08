@@ -28,6 +28,7 @@
  '(TeX-electric-math '("$" . "$"))
  '(TeX-electric-sub-and-superscript t)
  '(TeX-parse-self t)
+ '(auctex-latexmk-inherit-TeX-PDF-mode t)
  '(bookmark-save-flag 1)
  '(completion-category-overrides '((file (styles partial-completion))))
  '(completion-cycle-threshold 3)

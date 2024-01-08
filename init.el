@@ -42,6 +42,7 @@
 (require 'crafted-golang-packages)
 (require 'crafted-custom-cc-packages)
 (require 'crafted-custom-js-ts-packages)
+(require 'crafted-custom-copilot-packages)
 
 ;; Install the packages listed in the `package-selected-packages' list.
 (package-install-selected-packages :noconfirm)
@@ -68,6 +69,7 @@
 ;; IDE features
 (require 'crafted-golang-config)
 (require 'crafted-custom-cc-config)
+(require 'crafted-custom-copilot-config)
 
 (unless crafted-startup-inhibit-splash
   (setq initial-buffer-choice #'crafted-startup-screen))

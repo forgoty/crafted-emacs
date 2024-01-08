@@ -77,10 +77,18 @@
           (single (insert "import " line "\n"))
           (none (insert "\nimport (\n\t" line "\n)\n")))))))
 
+(defvar-local flycheck-local-checkers nil)
+(defun +flycheck-checker-get(fn checker property)
+  (or (alist-get property (alist-get checker flycheck-local-checkers))
+      (funcall fn checker property)))
+(advice-add 'flycheck-checker-get :around '+flycheck-checker-get)
+
 (defun go//hooks ()
   "Call this when go-ts-mode is enabled."
   (setq-local tab-width go-tab-width)
   (setq-local evil-shift-width go-tab-width)
+  (flycheck-golangci-lint-setup)
+  (setq flycheck-local-checkers '((eglot-check . ((next-checkers . ((warning . golangci-lint)))))))
   (add-hook 'before-save-hook (lambda ()
                                 (call-interactively #'eglot-format-buffer)
                                 (call-interactively #'eglot-code-action-organize-imports))))
@@ -100,11 +108,7 @@
 
 (add-hook 'go-ts-mode-hook 'go//hooks)
 (add-hook 'go-ts-mode-hook #'eglot-ensure)
-
-;; Flycheck
 (add-hook 'go-ts-mode-hook 'flycheck-mode)
-(eval-after-load 'flycheck                                       
-  '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
 
 ;; Enable folding
 (add-hook 'go-ts-mode-hook #'hs-minor-mode)
