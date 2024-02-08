@@ -17,7 +17,7 @@
   (rg-define-search custom/rg-custom-search
     :format regexp
     :files "everything"
-    :flags ("--hidden")
+    :flags ("--hidden --glob '!{.git,node_modules,vendor}/*'")
     :dir project
     )
 )
