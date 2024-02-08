@@ -27,7 +27,7 @@
       doom-modeline-env-version nil
       doom-modeline-gnus nil
       doom-modeline-buffer-encoding t
-      doom-modeline-buffer-file-name-style 'truncate-except-project
+      doom-modeline-buffer-file-name-style 'relative-from-project
       doom-modeline-major-mode-icon nil)
 
 ;; Enable window numbers in modeline
