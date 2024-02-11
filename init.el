@@ -61,7 +61,6 @@
 (require 'crafted-workspaces-config)
 (require 'crafted-completion-config)
 (require 'crafted-writing-config)
-(require 'crafted-custom-completion-config)
 (require 'crafted-custom-themes-config)
 (require 'crafted-custom-tools-config)
 (require 'crafted-custom-input-config)

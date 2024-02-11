@@ -35,6 +35,11 @@
 (evil-define-key 'visual global-map "<" 'custom/evil-shift-left-visual)
 (evil-define-key 'visual global-map ">" 'custom/evil-shift-right-visual)
 
+;; vertico keybindings
+(keymap-set vertico-map "C-j" 'vertico-next)
+(keymap-set vertico-map "C-k" 'vertico-previous)
+(keymap-set vertico-map "M-h" 'vertico-directory-up)
+
 ; Custom evil-textobj-tree-sitter
 ;; bind `function.outer`(entire function block) to `f` for use in things like `vaf`, `yaf`
 (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
@@ -55,6 +60,10 @@
 (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-region)
 (evil-define-key 'visual evil-surround-mode-map "S" 'evil-substitute)
 
+;; Use visual line motions even outside of visual-line-mode buffers
+(evil-global-set-key 'motion "j" 'evil-next-visual-line)
+(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
 ;; Evil-visualstar
 (global-evil-visualstar-mode)
 
@@ -72,7 +81,6 @@
 (my-leader-def
   "TAB" '(evil-switch-to-windows-last-buffer :which-key "switch to previous window")
   "SPC" '(execute-extended-command :which-key "M-x")
-  "/" '(custom/rg-custom-search :which-key "regexp search in project")
   "1" '(winum-select-window-1 :which-key "select window 1")
   "2" '(winum-select-window-2 :which-key "select window 2")
   "3" '(winum-select-window-3 :which-key "select window 3")
@@ -128,10 +136,8 @@
   "wd" '(evil-window-delete t :which-key "window delete"))
 (my-leader-def
   "s"  '(:ignore t :which-key "search/symbol")
-  "ss" '(rg-project :which-key "project search")
   "sc" '(evil-ex-nohighlight :which-key "clear highlight")
   "se" '(iedit-mode :which-key "iedit")
-  "sw" '(rg-dwim-project-dir :which-key "search a word in a project")
   )
 (my-leader-def
   "b"  '(:ignore t :which-key "buffers")

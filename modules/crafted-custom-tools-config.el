@@ -12,15 +12,6 @@
 ;;; Code:
 
 ;; Custom tool functions
-(with-eval-after-load 'rg
-  (rg-enable-default-bindings)
-  (rg-define-search custom/rg-custom-search
-    :format regexp
-    :files "everything"
-    :flags ("--hidden --glob '!{.git,node_modules,vendor}/*'")
-    :dir project
-    )
-)
 
 (defun custom/toggle-flycheck-error-list ()
   "Toggle flycheck's error list window.
@@ -38,8 +29,17 @@ If the error list is visible, hide it.  Otherwise, show it."
     (flycheck-list-errors)
     (switch-to-buffer-other-window flycheck-error-list-buffer)))
 
-;; Custom advices
+(setq consult-ripgrep-args
+  "/bin/rg --null --line-buffered --color=never --max-columns=1000 --path-separator /\
+   --smart-case --no-heading --with-filename --line-number --hidden --glob \"!{.git,node_modules,vendor,.venv}/*\"")
+
+(add-to-list 'vc-directory-exclusion-list "vendor")
+(add-to-list 'vc-directory-exclusion-list ".venv")
+(add-to-list 'vc-directory-exclusion-list "node_modules")
+
+;; Custom advice
 (advice-add #'project-find-regexp :override 'consult-ripgrep)
+
 
 (provide 'crafted-custom-tools-config)
 ;;; crafted-custom-tools-config.el ends here

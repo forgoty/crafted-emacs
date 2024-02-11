@@ -10,7 +10,6 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'package-selected-packages 'rg)
 (add-to-list 'package-selected-packages 'flycheck)
 (add-to-list 'package-selected-packages 'flycheck-pos-tip)
 (add-to-list 'package-selected-packages 'popwin)
